@@ -6,20 +6,20 @@ import java.util.Scanner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 public class Admin {
     private int adminId;
     private String username;
     private String password;
     private DatabaseConnection dbConnection;
 
-    //Constructor
+    // Constructor
     public Admin(int adminId, String username, String password) {
         this.adminId = adminId;
         this.username = username;
         this.password = password;
         this.dbConnection = new DatabaseConnection();
     }
+
     public boolean login(HttpServletRequest request) {
         String inputUsername = request.getParameter("username");
         String inputPassword = request.getParameter("password");
@@ -61,6 +61,12 @@ public class Admin {
         return false;
     }
 
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+    }
 
     public void generatePayrollReport() {
         // Open database connection
@@ -76,7 +82,7 @@ public class Admin {
             ResultSet resultSet = statement.executeQuery();
 
             // Print payroll report to the UI created by JavaFX
-            
+
             // Close the result set and statement
             resultSet.close();
             statement.close();
