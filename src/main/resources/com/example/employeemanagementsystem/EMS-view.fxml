@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="800.0">
+         <children>
+            <AnchorPane prefHeight="500.0" prefWidth="250.0" styleClass="left_anch" stylesheets="@LoginDesign.css">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@login.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="15.0" layoutY="211.0" text="Employee Management System" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <AnchorPane layoutX="250.0" prefHeight="500.0" prefWidth="550.0" styleClass="right_anch" stylesheets="@LoginDesign.css">
+               <children>
+                  <ImageView fitHeight="500.0" fitWidth="550.0" opacity="0.5" pickOnBounds="true">
+                     <image>
+                        <Image url="@emps.jpg" />
+                     </image>
+                     <effect>
+                        <BoxBlur width="3.0" />
+                     </effect>
+                  </ImageView>
+                  <TextField layoutX="161.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="username" />
+                  <TextField layoutX="161.0" layoutY="208.0" prefHeight="30.0" prefWidth="250.0" promptText="password" />
+                  <Button layoutX="161.0" layoutY="326.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Login" />
+                  <ChoiceBox layoutX="161.0" layoutY="263.0" prefHeight="25.0" prefWidth="95.0" />
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
