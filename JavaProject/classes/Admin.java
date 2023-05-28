@@ -3,26 +3,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
+import java.sql.*;
 
 public class Admin {
     private int adminId;
     private String username;
     private String password;
+    private boolean isLoggedIn;
     private DatabaseConnection dbConnection;
 
-    // Constructor
     public Admin(int adminId, String username, String password) {
         this.adminId = adminId;
         this.username = username;
         this.password = password;
+        this.isLoggedIn = false;
         this.dbConnection = new DatabaseConnection();
     }
 
-    public boolean login(HttpServletRequest request) {
-        String inputUsername = request.getParameter("username");
-        String inputPassword = request.getParameter("password");
+    public boolean login() {
+        Scanner scanner = new Scanner(System.in);
+        String inputUsername = scanner.nextLine();
+        String inputPassword = scanner.nextLine();
+        scanner.close();
 
         // Open database connection
         dbConnection.open();
@@ -47,10 +50,8 @@ public class Admin {
             // Close database connection
             dbConnection.close();
 
-            // If login is successful, create a session
             if (isValid) {
-                HttpSession session = request.getSession();
-                session.setAttribute("loggedInUser", inputUsername);
+                isLoggedIn = true;
             }
 
             return isValid;
@@ -61,38 +62,46 @@ public class Admin {
         return false;
     }
 
-    public void logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+    public void logout() {
+        isLoggedIn = false;
     }
 
-    public void generatePayrollReport() {
-        // Open database connection
-        dbConnection.open();
-        Connection connection = dbConnection.getConnection();
-
-        // Prepare SQL query to retrieve payroll information
-        String sql = "SELECT employee_name, salary FROM employees";
-
-        try {
-            // Execute the query
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-
-            // Print payroll report to the UI created by JavaFX
-
-            // Close the result set and statement
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Close database connection
-        dbConnection.close();
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
     // Other admin-related methods
+
+    public void generatePayrollReport() {
+        if (isLoggedIn) {
+            // Open database connection
+            dbConnection.open();
+            Connection connection = dbConnection.getConnection();
+
+            // Prepare SQL query to retrieve payroll information
+            String sql = "SELECT employee_name, salary FROM employees";
+
+            try {
+                // Execute the query
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+
+                // Print payroll report to the UI created by JavaFX
+
+                // Close the result set and statement
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Close database connection
+            dbConnection.close();
+        } else {
+            System.out.println("Error message: Access Denied Bitch");
+        }
+
+        // Other admin-related methods
+    }
+
 }
