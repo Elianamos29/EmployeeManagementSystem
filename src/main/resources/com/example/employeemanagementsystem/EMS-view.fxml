@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.employeemanagementsystem.EMSController">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="800.0">
          <children>
@@ -35,7 +35,7 @@
                   </ImageView>
                   <TextField layoutX="161.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="username" />
                   <TextField layoutX="161.0" layoutY="208.0" prefHeight="30.0" prefWidth="250.0" promptText="password" />
-                  <Button layoutX="161.0" layoutY="326.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Login" />
+                  <Button fx:id="logbtn" layoutX="161.0" layoutY="326.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" text="Login" />
                   <ChoiceBox layoutX="161.0" layoutY="263.0" prefHeight="25.0" prefWidth="95.0" />
                </children></AnchorPane>
          </children>
