@@ -3,10 +3,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Admin {
+
     private int adminId;
     private String username;
     private String password;
@@ -69,39 +72,82 @@ public class Admin {
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
-
     // Other admin-related methods
-
+    
     public void generatePayrollReport() {
         if (isLoggedIn) {
-            // Open database connection
-            dbConnection.open();
-            Connection connection = dbConnection.getConnection();
+            // Retrieve the attendance records from the database
+            Map<Integer, Integer> attendanceRecords = getAttendanceRecords();
 
-            // Prepare SQL query to retrieve payroll information
-            String sql = "SELECT employee_name, salary FROM employees";
+            // Calculate payroll based on attendance
+            Map<Integer, Double> payroll = calculatePayroll(attendanceRecords);
 
-            try {
-                // Execute the query
-                PreparedStatement statement = connection.prepareStatement(sql);
-                ResultSet resultSet = statement.executeQuery();
-
-                // Print payroll report to the UI created by JavaFX
-
-                // Close the result set and statement
-                resultSet.close();
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            // Print the payroll report
+            System.out.println("Payroll Report:");
+            System.out.println("--------------------");
+            for (Map.Entry<Integer, Double> entry : payroll.entrySet()) {
+                int employeeId = entry.getKey();
+                double salary = entry.getValue();
+                System.out.println("Employee ID: " + employeeId + ", Salary: $" + salary);
             }
+            System.out.println("--------------------");
+        } else {
+            System.out.println("Access denied. Please log in.");
+        }
+    }
+
+    private Map<Integer, Integer> getAttendanceRecords() {
+        Map<Integer, Integer> attendanceRecords = new HashMap<>();
+
+        // Open database connection
+        dbConnection.open();
+
+        // Prepare SQL query to retrieve attendance records
+        String sql = "SELECT employee_id, COUNT(*) AS attendance_count FROM attendance GROUP BY employee_id";
+
+        try {
+            // Execute the query
+            Statement statement = dbConnection.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Process the result set
+            while (resultSet.next()) {
+                int employeeId = resultSet.getInt("employee_id");
+                int attendanceCount = resultSet.getInt("attendance_count");
+                attendanceRecords.put(employeeId, attendanceCount);
+            }
+
+            // Close the result set and statement
+            resultSet.close();
+            statement.close();
 
             // Close database connection
             dbConnection.close();
-        } else {
-            System.out.println("Error message: Access Denied Bitch");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        // Other admin-related methods
+        return attendanceRecords;
+    }
+
+    private Map<Integer, Double> calculatePayroll(Map<Integer, Integer> attendanceRecords) {
+        Map<Integer, Double> payroll = new HashMap<>();
+
+        // Iterate over the attendance records and calculate payroll
+        for (Map.Entry<Integer, Integer> entry : attendanceRecords.entrySet()) {
+            int employeeId = entry.getKey();
+            int attendanceCount = entry.getValue();
+
+            // Assuming salary is fixed per day
+            double salaryPerDay = 100.0;
+
+            // Calculate salary based on attendance count
+            double salary = salaryPerDay * attendanceCount;
+
+            payroll.put(employeeId, salary);
+        }
+
+        return payroll;
     }
 
 }
