@@ -50,7 +50,7 @@ public class EMSController implements Initializable {
             throw new RuntimeException(e);
         }
         Stage dashboardStage = new Stage();
-        dashboardStage.setTitle("Hello!");
+        dashboardStage.setTitle("Employee Management System");
         dashboardStage.setResizable(false);
         //dashboardStage.initModality(Modality.APPLICATION_MODAL);
         dashboardStage.setScene(scene);
