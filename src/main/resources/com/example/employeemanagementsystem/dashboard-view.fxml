@@ -242,7 +242,7 @@
                                     <Label layoutX="43.0" layoutY="39.0" text="Employee ID:" />
                                     <Label layoutX="45.0" layoutY="115.0" text="Last Name:" />
                                     <Label layoutX="295.0" layoutY="77.0" text="Department:" />
-                                    <Label layoutX="310.0" layoutY="39.0" text="E-mail:" />
+                                    <Label layoutX="321.0" layoutY="39.0" text="E-mail:" />
                                     <Label layoutX="44.0" layoutY="77.0" text="First Name:" />
                                     <Button fx:id="addBtn" layoutX="233.0" layoutY="193.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Add">
                                        <font>
@@ -264,10 +264,12 @@
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <ComboBox fx:id="combGender" layoutX="629.0" layoutY="73.0" prefHeight="25.0" prefWidth="145.0" promptText="choose" />
+                                    <ComboBox fx:id="combGender" layoutX="624.0" layoutY="73.0" prefHeight="25.0" prefWidth="150.0" promptText="choose" />
                                     <Label layoutX="569.0" layoutY="77.0" text="Gender:" />
                                     <TextField fx:id="txtSalary" layoutX="625.0" layoutY="35.0" />
                                     <Label layoutX="573.0" layoutY="39.0" text="Salary:" />
+                                    <Label layoutX="316.0" layoutY="115.0" text="Position:" />
+                                    <TextField fx:id="txtPos" layoutX="367.0" layoutY="111.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutY="-3.0" prefHeight="316.0" prefWidth="827.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
@@ -279,9 +281,10 @@
                                           <TableColumn fx:id="colLname" prefWidth="100.0" text="Last Name" />
                                           <TableColumn fx:id="colGender" minWidth="6.0" prefWidth="72.0" text="Gender" />
                                           <TableColumn fx:id="colDept" prefWidth="107.0" text="Department" />
-                                          <TableColumn fx:id="colEmail" prefWidth="119.0" text="E-mail" />
-                                          <TableColumn fx:id="colSalary" prefWidth="100.0" text="Salary" />
-                                          <TableColumn fx:id="colDOJ" prefWidth="143.0" text="Date of Joinging" />
+                                          <TableColumn fx:id="colEmail" prefWidth="92.0" text="E-mail" />
+                                          <TableColumn fx:id="colPos" prefWidth="96.0" text="Position" />
+                                          <TableColumn fx:id="colSalary" prefWidth="74.0" text="Salary" />
+                                          <TableColumn fx:id="colDOJ" prefWidth="101.0" text="Date of Joinging" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="txtSearch" layoutX="9.0" layoutY="23.0" prefHeight="35.0" prefWidth="317.0" />

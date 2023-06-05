@@ -10,6 +10,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -24,31 +29,31 @@ public class DashboardController implements Initializable {
     private Button clearBtn;
 
     @FXML
-    private TableView<?> emptableView;
+    private TableColumn<Employee, Date> colDOJ;
 
     @FXML
-    private TableColumn<?, ?> colDOJ;
+    private TableColumn<Employee, String> colDept;
 
     @FXML
-    private TableColumn<?, ?> colDept;
+    private TableColumn<Employee, String> colEmail;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableColumn<Employee, String> colFname;
 
     @FXML
-    private TableColumn<?, ?> colFname;
+    private TableColumn<Employee, String> colGender;
 
     @FXML
-    private TableColumn<?, ?> colGender;
+    private TableColumn<Employee, Integer> colID;
 
     @FXML
-    private TableColumn<?, ?> colID;
+    private TableColumn<Employee, String> colLname;
 
     @FXML
-    private TableColumn<?, ?> colLname;
+    private TableColumn<Employee, String> colPos;
 
     @FXML
-    private TableColumn<?, ?> colSalary;
+    private TableColumn<Employee, Double> colSalary;
 
     @FXML
     private ComboBox<?> combGender;
@@ -58,6 +63,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button deleteBtn;
+
+    @FXML
+    private TableView<Employee> emptableView;
 
     @FXML
     private Button home_attendBtn;
@@ -105,6 +113,9 @@ public class DashboardController implements Initializable {
     private TextField txtLname;
 
     @FXML
+    private TextField txtPos;
+
+    @FXML
     private TextField txtSalary;
 
     @FXML
@@ -116,6 +127,12 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane usermgmtView;
 
+
+    private Connection connect;
+    private Statement statement;
+    private PreparedStatement prepare;
+    private ResultSet result;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dashboardView.setVisible(true);
@@ -123,8 +140,9 @@ public class DashboardController implements Initializable {
         usermgmtView.setVisible(false);
         leavemgmtView.setVisible(false);
         attendanceView.setVisible(false);
-        setUserName();
+        showUserName();
     }
+
 
     public void switchView(ActionEvent event) {
         if (event.getSource() == home_dashbordBtn) {
@@ -160,7 +178,72 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void setUserName() {
+    public void addEmployee() {
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        String sql = "INSERT INTO employee "
+                + "(id,first-name,last-name,gender,department,email,position,salary,date-joining) "
+                + "VALUES(?,?,?,?,?,?,?,?,?)";
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtID.getText().isEmpty()
+                    || txtFname.getText().isEmpty()
+                    || txtLname.getText().isEmpty()
+                    || combGender.getSelectionModel().getSelectedItem() == null
+                    || txtDept.getText().isEmpty()
+                    || txtEmail.getText().isEmpty()
+                    || txtPos.getText().isEmpty()
+                    || txtSalary.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+
+                String check = "SELECT id FROM employee WHERE id = '"
+                        + txtID.getText() + "'";
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(check);
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Employee ID: " + txtID.getText() + " already exists.");
+                    alert.showAndWait();
+                } else {
+
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, txtID.getText());
+                    prepare.setString(2, txtFname.getText());
+                    prepare.setString(3, txtLname.getText());
+                    prepare.setString(4, (String) combGender.getSelectionModel().getSelectedItem());
+                    prepare.setString(5, txtDept.getText());
+                    prepare.setString(6, txtEmail.getText());
+                    prepare.setString(7, txtPos.getText());
+                    prepare.setString(8, txtSalary.getText());
+
+                    prepare.setString(9, String.valueOf(sqlDate));
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added!");
+                    alert.showAndWait();
+
+                }
+            }
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void showUserName() {
         lblAdmin.setText(getData.username);
     }
 
