@@ -150,4 +150,27 @@ public class Admin {
         return payroll;
     }
 
+    public void updateEmployeeSalary(int employeeId, double newSalary) {
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            String sql = "UPDATE employee SET salary = ? WHERE employeeId = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDouble(1, newSalary);
+            statement.setInt(2, employeeId);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Employee salary updated successfully.");
+            } else {
+                System.out.println("Failed to update employee salary.");
+            }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("An error occurred while updating employee salary.");
+        }
+    }
+
 }
