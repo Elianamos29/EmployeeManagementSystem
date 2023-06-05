@@ -152,7 +152,7 @@ public class Admin {
 
     public void updateEmployeeSalary(int employeeId, double newSalary) {
         try {
-            Connection connection = DatabaseConnection.getConnection();
+            Connection connection = dbConnection.getConnection();
             String sql = "UPDATE employee SET salary = ? WHERE employeeId = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setDouble(1, newSalary);
