@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.employeemanagementsystem.DashboardController">
@@ -37,7 +38,7 @@
                                     <Image url="@user-green.jpg" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="home_dashbordBtn" graphicTextGap="20.0" layoutX="18.0" layoutY="199.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Admin Dashboard">
+                              <Button fx:id="home_dashbordBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Admin Dashboard">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -52,7 +53,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_staffmgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Management" wrapText="true">
+                              <Button fx:id="home_staffmgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="263.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Management" wrapText="true">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="33.0" pickOnBounds="true">
                                        <image>
@@ -67,7 +68,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_attendBtn" graphicTextGap="30.0" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Attendance" textAlignment="CENTER">
+                              <Button fx:id="home_attendBtn" graphicTextGap="30.0" layoutX="14.0" layoutY="386.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Attendance" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true">
                                        <image>
@@ -82,7 +83,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_usermgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="322.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="User Management" textAlignment="CENTER">
+                              <Button fx:id="home_usermgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="User Management" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="31.0" pickOnBounds="true">
                                        <image>
@@ -97,7 +98,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_leavemgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="279.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Leave Management" wrapText="true">
+                              <Button fx:id="home_leavemgmtBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="303.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Leave Management" wrapText="true">
                                  <graphic>
                                     <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true">
                                        <image>
@@ -111,6 +112,27 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                              </Button>
+                              <Line endX="100.0" layoutX="126.0" layoutY="208.0" startX="-100.0">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                              <Label layoutX="93.0" layoutY="178.0" text="adminName" />
+                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="554.0" mnemonicParsing="false" onAction="#logout" prefHeight="31.0" prefWidth="141.0" style="-fx-background-color: transparent;" text="Logout">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@logout.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Button>
                            </children>
                            <effect>
@@ -210,7 +232,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="staffmgmtView" layoutX="10.0" layoutY="7.0" prefHeight="587.0" prefWidth="832.0">
                            <children>
-                              <AnchorPane layoutY="320.0" prefHeight="262.0" prefWidth="827.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 2px;" styleClass="textfield">
+                              <AnchorPane layoutY="320.0" prefHeight="262.0" prefWidth="827.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;" styleClass="textfield">
                                  <children>
                                     <TextField layoutX="119.0" layoutY="35.0" />
                                     <TextField layoutX="367.0" layoutY="73.0" />
@@ -248,15 +270,15 @@
                                     <Label layoutX="315.0" layoutY="115.0" text="Role:" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutY="-3.0" prefHeight="296.0" prefWidth="827.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                              <AnchorPane layoutY="-3.0" prefHeight="316.0" prefWidth="827.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
-                                    <TableView layoutX="14.0" layoutY="87.0" prefHeight="223.0" prefWidth="800.0">
+                                    <TableView layoutX="14.0" layoutY="71.0" prefHeight="232.0" prefWidth="800.0">
                                       <columns>
                                         <TableColumn prefWidth="75.0" text="C1" />
                                         <TableColumn prefWidth="75.0" text="C2" />
                                       </columns>
                                     </TableView>
-                                    <TextField layoutX="9.0" layoutY="23.0" prefHeight="35.0" prefWidth="317.0" styleClass="textfield" stylesheets="@DashboardDesign.css" />
+                                    <TextField layoutX="9.0" layoutY="23.0" prefHeight="35.0" prefWidth="317.0" />
                                     <Button layoutX="278.0" layoutY="24.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="47.0" style="-fx-background-color: white; -fx-background-radius: 0 8px 8px 0; -fx-border-radius: 0 8px 8px 0;" textFill="WHITE">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

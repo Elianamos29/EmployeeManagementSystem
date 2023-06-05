@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.employeemanagementsystem.StaffDashboardController">
    <children>
       <AnchorPane prefHeight="650.0" prefWidth="1100.0">
          <children>
@@ -23,29 +28,62 @@
                <left>
                   <AnchorPane prefHeight="600.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: cyan;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutY="7.0" prefHeight="590.0" prefWidth="250.0" style="-fx-background-color: #f7f7f7; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="172.0" layoutX="39.0" layoutY="34.0" pickOnBounds="true">
                                  <image>
                                     <Image url="@user-white.jpg" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="25.0" layoutY="260.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Dashboard">
+                              <Button fx:id="staffdashboardBtn" layoutX="25.0" layoutY="260.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Dashboard">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button layoutX="25.0" layoutY="304.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Attendance">
+                              <Button fx:id="attendanceBtn" layoutX="25.0" layoutY="304.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Attendance">
                                  <font>
-                                    <Font name="Arial" size="12.0" />
+                                    <Font name="Arial Bold" size="12.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Leave">
+                              <Button fx:id="requestleaveBtn" layoutX="25.0" layoutY="351.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Request Leave">
                                  <font>
-                                    <Font name="Arial" size="12.0" />
+                                    <Font name="Arial Bold" size="12.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Label layoutX="99.0" layoutY="198.0" text="username" />
+                              <Line endX="100.0" layoutX="125.0" layoutY="231.0" startX="-100.0">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </Line>
+                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="13.0" layoutY="561.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent;" text="Logout">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@logout.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
+                           <effect>
+                              <DropShadow />
+                           </effect>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
@@ -53,9 +91,42 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="76.0" layoutY="164.0" prefHeight="600.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="staffdashboardView" layoutX="76.0" layoutY="164.0" prefHeight="600.0" prefWidth="850.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="827.0" style="-fx-background-color: #ddd;" />
+                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="827.0" style="-fx-background-color: #fff; -fx-background-radius: 8px; -fx-border-radius: 8px;">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@admin.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="attendanceView" layoutX="111.0" layoutY="165.0" prefHeight="600.0" prefWidth="850.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="14.0" layoutY="4.0" prefHeight="590.0" prefWidth="436.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #f7f7f7;">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </AnchorPane>
+                              <AnchorPane layoutX="456.0" layoutY="3.0" prefHeight="590.0" prefWidth="380.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #f7f7f7;">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="RequestleaveView" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="850.0">
+                           <children>
+                              <AnchorPane layoutX="14.0" layoutY="4.0" prefHeight="307.0" prefWidth="818.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #f7f7f7;">
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>
