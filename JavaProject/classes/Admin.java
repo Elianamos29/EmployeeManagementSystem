@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Admin {
 
     private int adminId;
@@ -73,7 +72,7 @@ public class Admin {
         return isLoggedIn;
     }
     // Other admin-related methods
-    
+
     public void generatePayrollReport() {
         if (isLoggedIn) {
             // Retrieve the attendance records from the database
@@ -170,6 +169,57 @@ public class Admin {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("An error occurred while updating employee salary.");
+        }
+    }
+
+    // Method to register an employee
+    public void registerEmployee(int employeeId, String name, String email, String department, Date dateOfJoining,
+            String password) {
+        try {
+            Connection connection = dbConnection.getConnection();
+            String sql = "INSERT INTO employee (employeeId, name, email, department, designation, dateOfJoining, roleId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, employeeId);
+            statement.setString(2, name);
+            statement.setString(3, email);
+            statement.setString(4, department);
+            statement.setDate(5, new java.sql.Date(dateOfJoining.getTime()));
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                insertEmployeePassword(email, password); // Insert password into employee_password table
+                // registerd successfully message to the User Interface
+            } else {
+                // registration failed message to the User Interface
+            }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("An error occurred while registering the employee.");
+        }
+    }
+
+    // Method to insert password into employee_password table
+    private void insertEmployeePassword(String email, String password) {
+        try {
+            Connection connection = dbConnection.getConnection();
+            String sql = "INSERT INTO employee_password (email, password) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected <= 0) {
+                System.out.println("Failed to insert employee password.");
+            }
+
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("An error occurred while inserting the employee password.");
         }
     }
 
