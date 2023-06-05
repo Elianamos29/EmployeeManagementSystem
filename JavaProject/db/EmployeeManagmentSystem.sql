@@ -11,8 +11,14 @@ CREATE TABLE Employees (
     department VARCHAR(100) NOT NULL,
     gender CHAR(1) NOT NULL,
     date_of_joining DATE NOT NULL,
-    salary DECIMAL(10, 2) NOT NULL    
+    salary DECIMAL(10, 2) NOT NULL, 
 );
+CREATE TABLE Employee_Password (
+    email VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (email),
+    FOREIGN KEY (email) REFERENCES Employees(email)
+)
 CREATE TABLE Attendance (
     attendance_id INT PRIMARY KEY AUTO_INCREMENT,
     employee_id INT NOT NULL,
