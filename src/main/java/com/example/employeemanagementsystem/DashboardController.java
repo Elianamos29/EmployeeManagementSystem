@@ -1,11 +1,16 @@
 package com.example.employeemanagementsystem;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -14,9 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Date;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class DashboardController implements Initializable {
     @FXML
@@ -141,6 +144,7 @@ public class DashboardController implements Initializable {
         leavemgmtView.setVisible(false);
         attendanceView.setVisible(false);
         showUserName();
+
     }
 
 
@@ -157,6 +161,9 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
+
+            showEmployeeListData();
+            addEmployeeGenderList();
         } else if (event.getSource() == home_usermgmtBtn) {
             dashboardView.setVisible(false);
             staffmgmtView.setVisible(false);
@@ -182,9 +189,7 @@ public class DashboardController implements Initializable {
         Date date = new Date();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-        String sql = "INSERT INTO employee "
-                + "(id,first-name,last-name,gender,department,email,position,salary,date-joining) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO employee  (id,firstName,lastName,gender,department,email,position,salary,dateJoining) VALUES(?,?,?,?,?,?,?,?,?)";
 
         connect = database.connectDb();
 
@@ -237,14 +242,261 @@ public class DashboardController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
+                   //TODO
 
+                    showEmployeeListData();
+                    resetText();
                 }
             }
         } catch (Exception e) {e.printStackTrace();}
     }
 
+    public void deleteEmployee() {
+        String sql = "DELETE FROM employee WHERE id = "
+                + txtID.getText();
+
+        connect = database.connectDb();
+
+        try {
+
+            Alert alert;
+            if (txtID.getText().isEmpty()
+                    || txtFname.getText().isEmpty()
+                    || txtLname.getText().isEmpty()
+                    || txtDept.getText().isEmpty()
+                    || txtEmail.getText().isEmpty()
+                    || txtPos.getText().isEmpty()
+                    || txtSalary.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE Employee ID: " + txtID.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+                    showEmployeeListData();
+                    resetText();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEmployee() {
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        String sql = "UPDATE employee SET firstName = '"
+                + txtFname.getText() + "', lastName = '"
+                + txtLname.getText() + "', gender = '"
+                + combGender.getSelectionModel().getSelectedItem() + "', department = '"
+                + txtDept.getText()+ "', email = '"
+                + txtEmail.getText() + "', position = '"
+                + txtPos.getText()+ "', salary = "
+                + txtSalary.getText() + ", dateJoining = '" + sqlDate + "' WHERE id = "
+                + txtID.getText();
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtID.getText().isEmpty()
+                    || txtFname.getText().isEmpty()
+                    || txtLname.getText().isEmpty()
+                    || combGender.getSelectionModel().getSelectedItem() == null
+                    || txtDept.getText().isEmpty()
+                    || txtEmail.getText().isEmpty()
+                    || txtPos.getText().isEmpty()
+                    || txtSalary.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Employee ID: " + txtID.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+                    showEmployeeListData();
+                    resetText();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addEmployeeSelect() {
+        Employee employee = emptableView.getSelectionModel().getSelectedItem();
+        int num = emptableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        txtID.setText(String.valueOf(employee.getId()));
+        txtFname.setText(employee.getFname());
+        txtLname.setText(employee.getLname());
+        txtDept.setText(employee.getDepartment());
+        txtEmail.setText(employee.getEmail());
+        txtPos.setText(employee.getPosition());
+        txtSalary.setText(String.valueOf(employee.getSalary()));
+    }
+
+    public void employeeSearch() {
+
+        FilteredList<Employee> filter = new FilteredList<>(employeeList, e -> true);
+
+        txtSearch.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateEmployeeData -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateEmployeeData.getId()).contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployeeData.getFname().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployeeData.getLname().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployeeData.getGender().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployeeData.getDepartment().toLowerCase().contains(searchKey)) {
+                    return true;
+                }else if (predicateEmployeeData.getEmail().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateEmployeeData.getPosition().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateEmployeeData.getSalary()).contains(searchKey)) {
+                    return true;
+                } else if (String.valueOf(predicateEmployeeData.getDateJoin()).contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Employee> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(emptableView.comparatorProperty());
+        emptableView.setItems(sortList);
+    }
+
+    public ObservableList<Employee> employeeListData() {
+
+        ObservableList<Employee> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM employee";
+
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+            Employee employee;
+
+            while (result.next()) {
+                employee = new Employee(result.getInt("id"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getString("department"),
+                        result.getString("email"),
+                        result.getString("position"),
+                        result.getDouble("salary"),
+                        result.getDate("dateJoining"));
+                listData.add(employee);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<Employee> employeeList;
+
+    public void showEmployeeListData() {
+        employeeList = employeeListData();
+
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colFname.setCellValueFactory(new PropertyValueFactory<>("fname"));
+        colLname.setCellValueFactory(new PropertyValueFactory<>("lname"));
+        colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        colDept.setCellValueFactory(new PropertyValueFactory<>("department"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colPos.setCellValueFactory(new PropertyValueFactory<>("position"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        colDOJ.setCellValueFactory(new PropertyValueFactory<>("dateJoin"));
+
+        emptableView.setItems(employeeList);
+
+    }
+
+    private String[] listGender = {"Male", "Female"};
+
+    public void addEmployeeGenderList() {
+        List<String> lists = new ArrayList<>();
+
+        for (String data : listGender) {
+            lists.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(lists);
+        combGender.setItems(listData);
+    }
+
     public void showUserName() {
         lblAdmin.setText(getData.username);
+    }
+
+    public void resetText() {
+        txtID.setText("");
+        txtFname.setText("");
+        txtLname.setText("");
+        combGender.getSelectionModel().clearSelection();
+        txtDept.setText("");
+        txtEmail.setText("");
+        txtPos.setText("");
+        txtSalary.setText("");
     }
 
     public void logout() {
