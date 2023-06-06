@@ -11,7 +11,6 @@ public class DatabaseConnection {
 
     public DatabaseConnection() {
         try {
-            // Load the MySQL JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -20,7 +19,6 @@ public class DatabaseConnection {
 
     public void open() {
         try {
-            // Establish the database connection
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             System.out.println("Database connection established.");
         } catch (SQLException e) {
@@ -30,7 +28,6 @@ public class DatabaseConnection {
 
     public void close() {
         try {
-            // Close the database connection
             if (connection != null && !connection.isClosed()) {
                 connection.close();
                 System.out.println("Database connection closed.");

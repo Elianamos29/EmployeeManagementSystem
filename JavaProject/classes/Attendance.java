@@ -16,7 +16,5 @@
         this.remarks = remarks;
     }
 
-    // Getters and setters
 
-    // Other attendance-related methods
 }

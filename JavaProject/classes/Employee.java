@@ -23,7 +23,6 @@
         this.dbConnection = new DatabaseConnection(); 
     }
 
-    // Getters and setters
     public int getEmployeeId() {
         return employeeId;
     }
@@ -44,7 +43,6 @@
         return dateOfJoining;
     }
 
-    // Setters
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
@@ -70,7 +68,6 @@
             String email = scanner.nextLine();
             String password = scanner.nextLine();
 
-            // Validate the email and password
             if (validateLogin(email, password)) {
                 System.out.println("Login successful.");
                 return new Employee(email); // backup to the getData class - using instance to get the email
@@ -131,48 +128,36 @@
 
     public void markAttendance(Date date, String status, String remarks) {
 
-        // Open database connection
         dbConnection.open();
 
-        // Prepare SQL statement to insert attendance record
         String sql = "INSERT INTO attendance (employee_id, date, status, remarks) VALUES (?, ?, ?, ?)";
 
         try {
-            // Create a PreparedStatement with the SQL statement
             PreparedStatement statement = dbConnection.getConnection().prepareStatement(sql);
 
-            // Set the parameter values
             statement.setInt(1, employeeId);
             statement.setDate(2, new java.sql.Date(date.getTime()));
             statement.setString(3, status);
             statement.setString(4, remarks);
 
-            // Execute the SQL statement
             statement.executeUpdate();
 
-            // Close the statement
             statement.close();
 
-            // Close database connection
             dbConnection.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Display error message
             System.out.println("Failed to mark attendance. Please try again.");
         }
     }
 
     public void requestLeave(Date startDate, Date endDate, String reason) {
-        // Implement logic to create a leave request for the employee
     
-        // Open database connection
         dbConnection.open();
     
-        // Prepare SQL statement to insert leave request
         String sql = "INSERT INTO leave_request (employee_id, start_date, end_date, reason, status) VALUES (?, ?, ?, ?, ?)";
     
         try {
-            // Create a PreparedStatement with the SQL statement
             PreparedStatement statement = dbConnection.getConnection().prepareStatement(sql);
     
             // Set the parameter values
@@ -182,20 +167,15 @@
             statement.setString(4, reason);
             statement.setString(5, "Pending"); // Set initial status as "Pending"
     
-            // Execute the SQL statement
             statement.executeUpdate();
     
-            // Close the statement
             statement.close();
     
-            // Close database connection
             dbConnection.close();
     
-            // Send success message to UI
 
                 } catch (SQLException e) {
             e.printStackTrace();
-            // Display error message
         }
     }
     
