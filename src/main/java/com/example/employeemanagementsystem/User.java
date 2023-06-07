@@ -2,6 +2,8 @@ package com.example.employeemanagementsystem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -9,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class User {
     private String username;
@@ -78,7 +81,8 @@ public class User {
         return listData;
     }
 
-    private ObservableList<User> userList;
+    private static ObservableList<User> userList;
+
 
     public void showUserListData(TableView<User> tblPassword, TableColumn<User, String> colUsername, TableColumn<User, String> colUseremail, TableColumn<User, String> colPassword, TableColumn<User, String> colUsertype) {
         userList = userListData();
@@ -142,11 +146,138 @@ public class User {
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    public void deleteUser() {
-        //TODO
+    public void deleteUser(TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        String sql = "DELETE FROM users where username = '" +
+                txtUsername.getText() + "'";
+        connect = database.connectDb();
+
+        try {
+
+            Alert alert;
+            if (txtUsername.getText().isEmpty()
+                    || txtUseremail.getText().isEmpty()
+                    || txtPassword.getText().isEmpty()
+                    || txtUsertype.getText().isEmpty() ) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE User: " + txtUsername.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateUser() {
-        //TODO
+    public void updateUser(TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        String sql = "UPDATE employee SET email = '"
+                + txtUseremail.getText() + "', password = '"
+                + txtPassword.getText() + "', userType = '"
+                + txtUsertype.getText() + "' WHERE username = "
+                + txtUsername.getText();
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtUsername.getText().isEmpty()
+                    || txtUseremail.getText().isEmpty()
+                    || txtPassword.getText().isEmpty()
+                    || txtUsertype.getText().isEmpty() ) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE user: " + txtUsername.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void userSelect(TableView<User> tblpassword, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        User userSelected = tblpassword.getSelectionModel().getSelectedItem();
+        int num = tblpassword.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        txtUsername.setText(String.valueOf(userSelected.getUsername()));
+        txtUseremail.setText(userSelected.getEmail());
+        txtPassword.setText(userSelected.getPassword());
+        txtUsertype.setText(userSelected.getUserType());
+    }
+
+    public void searchUser(TextField txtSearch, TableView<User> tblpassword) {
+        FilteredList<User> filter = new FilteredList<>(userList, e -> true);
+
+        txtSearch.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateUserData -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateUserData.getUsername().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getEmail().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getPassword().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getUserType().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<User> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblpassword.comparatorProperty());
+        tblpassword.setItems(sortList);
     }
 }

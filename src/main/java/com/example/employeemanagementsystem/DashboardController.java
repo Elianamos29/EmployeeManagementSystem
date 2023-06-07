@@ -518,6 +518,34 @@ public class DashboardController implements Initializable {
         resetUserText();
     }
 
+    public void deleteUser() {
+        User user = new User();
+
+        user.deleteUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        showUserListData();
+        resetUserText();
+    }
+
+    public void updateUser() {
+        User user = new User();
+
+        user.updateUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        showUserListData();
+        resetUserText();
+    }
+
+    public void selectUser() {
+        User user = new User();
+
+        user.userSelect(tblPassword, txtUsername, txtUseremail, txtPassword, txtUsertype);
+    }
+
+    public void searchUser() {
+        User user = new User();
+
+        user.searchUser(txtsearchUser, tblPassword);
+    }
+
     private String[] listGender = {"Male", "Female"};
 
     public void addEmployeeGenderList() {

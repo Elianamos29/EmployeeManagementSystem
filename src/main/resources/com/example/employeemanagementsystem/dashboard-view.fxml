@@ -316,12 +316,12 @@
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="deleteuserBtn" layoutX="196.0" layoutY="367.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="70.0" text="Delete">
+                                    <Button fx:id="deleteuserBtn" layoutX="196.0" layoutY="367.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="40.0" prefWidth="70.0" text="Delete">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="updateuserBtn" layoutX="64.0" layoutY="367.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="70.0" text="Update">
+                                    <Button fx:id="updateuserBtn" layoutX="64.0" layoutY="367.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="70.0" text="Update">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
@@ -335,7 +335,7 @@
                                  </children></AnchorPane>
                               <AnchorPane layoutX="-4.0" layoutY="-12.0" prefHeight="591.0" prefWidth="460.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
-                                    <TableView fx:id="tblPassword" layoutX="13.0" layoutY="134.0" prefHeight="428.0" prefWidth="434.0">
+                                    <TableView fx:id="tblPassword" layoutX="13.0" layoutY="134.0" onMouseClicked="#selectUser" prefHeight="428.0" prefWidth="434.0">
                                        <columns>
                                           <TableColumn fx:id="colUsername" prefWidth="92.0" text="Username" />
                                           <TableColumn fx:id="colUseremail" prefWidth="150.0" text="Email" />
@@ -343,7 +343,7 @@
                                           <TableColumn fx:id="colUsertype" prefWidth="79.0" text="User Type" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="txtsearchUser" layoutX="34.0" layoutY="46.0" prefHeight="33.0" prefWidth="263.0" promptText="search" />
+                                    <TextField fx:id="txtsearchUser" layoutX="34.0" layoutY="46.0" onAction="#searchUser" prefHeight="33.0" prefWidth="263.0" promptText="search" />
                                     <ImageView fitHeight="24.0" fitWidth="29.0" layoutX="267.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@search.png" />
