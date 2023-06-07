@@ -129,6 +129,38 @@ public class DashboardController implements Initializable {
 
     @FXML
     private AnchorPane usermgmtView;
+    @FXML
+    private Button adduserBtn;
+    @FXML
+    private Button clearuserBtn;
+    @FXML
+    private TableColumn<User, String> colUseremail;
+
+    @FXML
+    private TableColumn<User, String> colUsername;
+
+    @FXML
+    private TableColumn<User, String> colPassword;
+    @FXML
+    private TableColumn<User, String> colUsertype;
+    @FXML
+    private Button deleteuserBtn;
+    @FXML
+    private TableView<User> tblPassword;
+    @FXML
+    private TextField txtPassword;
+    @FXML
+    private TextField txtUseremail;
+
+    @FXML
+    private TextField txtUsername;
+    @FXML
+    private TextField txtUsertype;
+
+    @FXML
+    private TextField txtsearchUser;
+    @FXML
+    private Button updateuserBtn;
 
 
     private Connection connect;
@@ -143,7 +175,7 @@ public class DashboardController implements Initializable {
         usermgmtView.setVisible(false);
         leavemgmtView.setVisible(false);
         attendanceView.setVisible(false);
-        showUserName();
+        User.showUserName(lblAdmin);
 
     }
 
@@ -170,6 +202,8 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(true);
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
+
+            showUserListData();
         } else if (event.getSource() == home_leavemgmtBtn) {
             dashboardView.setVisible(false);
             staffmgmtView.setVisible(false);
@@ -242,7 +276,6 @@ public class DashboardController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
-                   //TODO
 
                     showEmployeeListData();
                     resetText();
@@ -471,6 +504,20 @@ public class DashboardController implements Initializable {
 
     }
 
+    public void showUserListData() {
+        User user = new User();
+
+        user.showUserListData(tblPassword, colUsername, colUseremail, colPassword, colUsertype);
+    }
+
+    public void addUser() {
+        User user = new User();
+
+        user.addUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        showUserListData();
+        resetUserText();
+    }
+
     private String[] listGender = {"Male", "Female"};
 
     public void addEmployeeGenderList() {
@@ -484,9 +531,7 @@ public class DashboardController implements Initializable {
         combGender.setItems(listData);
     }
 
-    public void showUserName() {
-        lblAdmin.setText(getData.username);
-    }
+
 
     public void resetText() {
         txtID.setText("");
@@ -497,6 +542,13 @@ public class DashboardController implements Initializable {
         txtEmail.setText("");
         txtPos.setText("");
         txtSalary.setText("");
+    }
+
+    public void resetUserText() {
+        txtUsername.setText("");
+        txtUseremail.setText("");
+        txtPassword.setText("");
+        txtUsertype.setText("");
     }
 
     public void logout() {

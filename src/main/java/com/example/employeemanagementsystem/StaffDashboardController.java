@@ -3,16 +3,23 @@ package com.example.employeemanagementsystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class StaffDashboardController {
+public class StaffDashboardController implements Initializable {
+
+    @FXML
+    private Label lblStaff;
     @FXML
     private AnchorPane RequestleaveView;
 
@@ -33,6 +40,15 @@ public class StaffDashboardController {
 
     @FXML
     private Button logoutBtn;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        staffdashboardView.setVisible(true);
+        attendanceView.setVisible(false);
+        RequestleaveView.setVisible(false);
+        User.showUserName(lblStaff);
+
+    }
 
     public void switchView(ActionEvent event) {
         if (event.getSource() == staffdashboardBtn) {

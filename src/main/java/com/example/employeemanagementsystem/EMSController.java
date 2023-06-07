@@ -99,9 +99,10 @@ public class EMSController implements Initializable {
             }else{
                 if(result.next()){
                     getData.username = username.getText();
-                    if (result.getInt("id") == 111) {
+                    getData.userType = result.getString("userType");
+                    if (getData.userType.equals("admin")) {
                         loginAdmin();
-                    } else {
+                    } else if (getData.userType.equals("staff")){
                         loginStaff();
                     }
 
@@ -110,8 +111,6 @@ public class EMSController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Login");
                     alert.showAndWait();*/
-
-
 
 
                 }else{

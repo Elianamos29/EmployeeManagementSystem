@@ -59,7 +59,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Label layoutX="99.0" layoutY="198.0" text="username" />
+                              <Label fx:id="lblStaff" layoutX="99.0" layoutY="198.0" text="username" />
                               <Line endX="100.0" layoutX="125.0" layoutY="231.0" startX="-100.0">
                                  <effect>
                                     <DropShadow />
