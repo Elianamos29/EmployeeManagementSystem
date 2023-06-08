@@ -161,6 +161,22 @@ public class DashboardController implements Initializable {
     private TextField txtsearchUser;
     @FXML
     private Button updateuserBtn;
+    @FXML
+    private AnchorPane viewApproved;
+
+    @FXML
+    private AnchorPane viewNotApproved;
+
+    @FXML
+    private AnchorPane viewPending;
+    @FXML
+    private ToggleGroup status;
+    @FXML
+    private RadioButton pendingradBtn;
+    @FXML
+    private RadioButton approvedradBtn;
+    @FXML
+    private RadioButton notapprovedradBtn;
 
 
     private Connection connect;
@@ -577,6 +593,22 @@ public class DashboardController implements Initializable {
         txtUseremail.setText("");
         txtPassword.setText("");
         txtUsertype.setText("");
+    }
+
+    public void switchStatusView() {
+        if (((RadioButton)status.getSelectedToggle()).equals(pendingradBtn)) {
+            viewPending.setVisible(true);
+            viewApproved.setVisible(false);
+            viewNotApproved.setVisible(false);
+        } else if (((RadioButton)status.getSelectedToggle()).equals(approvedradBtn)) {
+            viewPending.setVisible(false);
+            viewApproved.setVisible(true);
+            viewNotApproved.setVisible(false);
+        } else if (((RadioButton)status.getSelectedToggle()).equals(notapprovedradBtn)) {
+            viewPending.setVisible(false);
+            viewApproved.setVisible(false);
+            viewNotApproved.setVisible(true);
+        }
     }
 
     public void logout() {

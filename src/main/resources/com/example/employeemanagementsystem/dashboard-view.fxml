@@ -4,9 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -304,7 +306,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="usermgmtView" layoutX="20.0" layoutY="17.0" prefHeight="587.0" prefWidth="824.0">
+                        <AnchorPane fx:id="usermgmtView" layoutX="20.0" layoutY="17.0" prefHeight="587.0" prefWidth="824.0" visible="false">
                            <children>
                               <AnchorPane layoutX="464.0" layoutY="-12.0" prefHeight="590.0" prefWidth="367.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
@@ -353,10 +355,49 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" visible="false">
+                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;">
                            <children>
-                              <AnchorPane layoutY="326.0" prefHeight="255.0" prefWidth="831.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 2px;" />
-                              <AnchorPane layoutY="-8.0" prefHeight="328.0" prefWidth="830.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 2px;" />
+                              <AnchorPane layoutX="469.0" layoutY="-7.0" prefHeight="588.0" prefWidth="362.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;" />
+                              <AnchorPane layoutY="-8.0" prefHeight="586.0" prefWidth="460.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                                 <children>
+                                    <RadioButton fx:id="pendingradBtn" layoutX="51.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchStatusView" selected="true" text="Pending">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="status" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="approvedradBtn" layoutX="171.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchStatusView" text="Approved" toggleGroup="$status" />
+                                    <RadioButton fx:id="notapprovedradBtn" layoutX="287.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchStatusView" text="Not Approved" toggleGroup="$status" />
+                                    <AnchorPane fx:id="viewPending" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
+                                       <children>
+                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="pending" />
+                                                <TableColumn prefWidth="75.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="viewApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
+                                       <children>
+                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="Approved" />
+                                              <TableColumn prefWidth="75.0" text="C2" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="viewNotApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0">
+                                       <children>
+                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <columns>
+                                                <TableColumn prefWidth="92.0" text="Not Approved" />
+                                                <TableColumn prefWidth="58.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </children></AnchorPane>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="attendanceView" layoutX="30.0" layoutY="27.0" prefHeight="587.0" prefWidth="832.0" visible="false">
