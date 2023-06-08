@@ -134,15 +134,15 @@
                                     <DropShadow />
                                  </effect>
                                  <children>
-                                    <ComboBox layoutX="76.0" layoutY="113.0" prefHeight="30.0" prefWidth="150.0" promptText="Leave Type" />
-                                    <ComboBox layoutX="76.0" layoutY="244.0" prefHeight="30.0" prefWidth="150.0" promptText="To Date" />
-                                    <ComboBox layoutX="76.0" layoutY="183.0" prefHeight="30.0" prefWidth="150.0" promptText="From Date" />
-                                    <Button layoutX="509.0" layoutY="239.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="96.0" text="Request">
+                                    <ComboBox fx:id="combLeavetype" layoutX="76.0" layoutY="113.0" prefHeight="30.0" prefWidth="150.0" promptText="Leave Type" />
+                                    <ComboBox fx:id="combTodate" layoutX="76.0" layoutY="244.0" prefHeight="30.0" prefWidth="150.0" promptText="To Date" />
+                                    <ComboBox fx:id="combFromdate" layoutX="76.0" layoutY="183.0" prefHeight="30.0" prefWidth="150.0" promptText="From Date" />
+                                    <Button fx:id="requestBtn" layoutX="509.0" layoutY="239.0" mnemonicParsing="false" onAction="#requestLeave" prefHeight="40.0" prefWidth="96.0" text="Request">
                                        <font>
                                           <Font name="Tahoma Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <TextArea layoutX="357.0" layoutY="113.0" prefHeight="100.0" prefWidth="399.0" promptText="Description...">
+                                    <TextArea fx:id="txtDescription" layoutX="357.0" layoutY="113.0" prefHeight="100.0" prefWidth="399.0" promptText="Description...">
                                        <font>
                                           <Font name="Arial" size="13.0" />
                                        </font>

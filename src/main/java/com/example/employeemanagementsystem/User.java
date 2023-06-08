@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.Optional;
 
 public class User {
+    private int userid;
     private String username;
     private String email;
     private String password;
@@ -26,11 +27,16 @@ public class User {
 
     public User() {}
 
-    public User(String username, String email, String password, String userType) {
+    public User(int userid, String username, String email, String password, String userType) {
+        this.userid = userid;
         this.username = username;
         this.email = email;
         this.password = password;
         this.userType = userType;
+    }
+
+    public int getUserid() {
+        return userid;
     }
 
     public String getUsername() {
@@ -66,7 +72,7 @@ public class User {
             User user;
 
             while (result.next()) {
-                user = new User(
+                user = new User(result.getInt("staffID"),
                         result.getString("username"),
                         result.getString("email"),
                         result.getString("password"),
@@ -96,14 +102,15 @@ public class User {
 
     }
 
-    public void addUser(TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
-        String sql = "INSERT INTO users (username, email, password, userType) VALUES(?,?,?,?)";
+    public void addUser(TextField txtUserid, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        String sql = "INSERT INTO users (staffID, username, email, password, userType) VALUES(?,?,?,?,?)";
 
         connect = database.connectDb();
 
         try {
             Alert alert;
-            if (txtUsername.getText().isEmpty()
+            if (txtUserid.getText().isEmpty()
+                    || txtUsername.getText().isEmpty()
                     || txtUseremail.getText().isEmpty()
                     || txtPassword.getText().isEmpty()
                     || txtUsertype.getText().isEmpty()) {
@@ -114,8 +121,8 @@ public class User {
                 alert.showAndWait();
             } else {
 
-                String check = "SELECT username FROM users WHERE username = '"
-                        + txtUsername.getText() + "'";
+                String check = "SELECT username FROM users WHERE staffID = " + txtUserid.getText()
+                        + " or username = '" + txtUsername.getText() + "'";
 
                 statement = connect.createStatement();
                 result = statement.executeQuery(check);
@@ -124,15 +131,16 @@ public class User {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Username: " + txtUsername.getText() + " already exists.");
+                    alert.setContentText("Username or userid already exists.");
                     alert.showAndWait();
                 } else {
 
                     prepare = connect.prepareStatement(sql);
-                    prepare.setString(1, txtUsername.getText());
-                    prepare.setString(2, txtUseremail.getText());
-                    prepare.setString(3, txtPassword.getText());
-                    prepare.setString(4, txtUsertype.getText());
+                    prepare.setString(1, txtUserid.getText());
+                    prepare.setString(2, txtUsername.getText());
+                    prepare.setString(3, txtUseremail.getText());
+                    prepare.setString(4, txtPassword.getText());
+                    prepare.setString(5, txtUsertype.getText());
                     prepare.executeUpdate();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
@@ -146,15 +154,16 @@ public class User {
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    public void deleteUser(TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
-        String sql = "DELETE FROM users where username = '" +
-                txtUsername.getText() + "'";
+    public void deleteUser(TextField txtUserid, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        String sql = "DELETE FROM users where staffID = " +
+                txtUserid.getText();
         connect = database.connectDb();
 
         try {
 
             Alert alert;
-            if (txtUsername.getText().isEmpty()
+            if (txtUserid.getText().isEmpty()
+                    ||txtUsername.getText().isEmpty()
                     || txtUseremail.getText().isEmpty()
                     || txtPassword.getText().isEmpty()
                     || txtUsertype.getText().isEmpty() ) {
@@ -189,18 +198,20 @@ public class User {
         }
     }
 
-    public void updateUser(TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
-        String sql = "UPDATE employee SET email = '"
+    public void updateUser(TextField txtUserid, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+        String sql = "UPDATE users SET username = '"
+                + txtUsername.getText() + "', email = '"
                 + txtUseremail.getText() + "', password = '"
                 + txtPassword.getText() + "', userType = '"
-                + txtUsertype.getText() + "' WHERE username = "
-                + txtUsername.getText();
+                + txtUsertype.getText() + "' WHERE staffID = "
+                + txtUserid.getText();
 
         connect = database.connectDb();
 
         try {
             Alert alert;
-            if (txtUsername.getText().isEmpty()
+            if (txtUserid.getText().isEmpty()
+                    ||txtUsername.getText().isEmpty()
                     || txtUseremail.getText().isEmpty()
                     || txtPassword.getText().isEmpty()
                     || txtUsertype.getText().isEmpty() ) {
@@ -234,7 +245,7 @@ public class User {
         }
     }
 
-    public void userSelect(TableView<User> tblpassword, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
+    public void userSelect(TableView<User> tblpassword, TextField txtUserid, TextField txtUsername, TextField txtUseremail, TextField txtPassword, TextField txtUsertype) {
         User userSelected = tblpassword.getSelectionModel().getSelectedItem();
         int num = tblpassword.getSelectionModel().getSelectedIndex();
 
@@ -242,7 +253,8 @@ public class User {
             return;
         }
 
-        txtUsername.setText(String.valueOf(userSelected.getUsername()));
+        txtUserid.setText(String.valueOf(userSelected.getUserid()));
+        txtUsername.setText(userSelected.getUsername());
         txtUseremail.setText(userSelected.getEmail());
         txtPassword.setText(userSelected.getPassword());
         txtUsertype.setText(userSelected.getUserType());
@@ -261,7 +273,9 @@ public class User {
 
                 String searchKey = newValue.toLowerCase();
 
-                if (predicateUserData.getUsername().toLowerCase().contains(searchKey)) {
+                if (String.valueOf(predicateUserData.getUserid()).contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getUsername().toLowerCase().contains(searchKey)) {
                     return true;
                 } else if (predicateUserData.getEmail().toLowerCase().contains(searchKey)) {
                     return true;

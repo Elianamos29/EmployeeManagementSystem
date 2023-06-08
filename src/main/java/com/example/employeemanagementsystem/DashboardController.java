@@ -150,6 +150,8 @@ public class DashboardController implements Initializable {
     @FXML
     private TextField txtPassword;
     @FXML
+    private TextField txtUserid;
+    @FXML
     private TextField txtUseremail;
 
     @FXML
@@ -177,6 +179,56 @@ public class DashboardController implements Initializable {
     private RadioButton approvedradBtn;
     @FXML
     private RadioButton notapprovedradBtn;
+
+    @FXML
+    private TableColumn<Leave, Date> colAprFrom;
+
+    @FXML
+    private TableColumn<Leave, String> colAprLeavetype;
+
+    @FXML
+    private TableColumn<Leave, Integer> colAprRequestid;
+
+    @FXML
+    private TableColumn<Leave, Integer> colAprStaffid;
+
+    @FXML
+    private TableColumn<Leave, Date> colAprTo;
+    @FXML
+    private TableColumn<Leave, Date> colNaprFrom;
+
+    @FXML
+    private TableColumn<Leave, String> colNaprLeavetype;
+
+    @FXML
+    private TableColumn<Leave, Integer> colNaprRequestid;
+
+    @FXML
+    private TableColumn<Leave, Integer> colNaprStaffid;
+
+    @FXML
+    private TableColumn<Leave, Date> colNaprTo;
+
+    @FXML
+    private TableColumn<Leave, Date> colPenFrom;
+
+    @FXML
+    private TableColumn<Leave, String> colPenLeavetype;
+
+    @FXML
+    private TableColumn<Leave, Integer> colPenRequestid;
+
+    @FXML
+    private TableColumn<Leave, Integer> colPenStaffid;
+    @FXML
+    private TableColumn<Leave, Date> colPenTo;
+    @FXML
+    private TableView<Leave> tblApproved;
+    @FXML
+    private TableView<Leave> tblNotapproved;
+    @FXML
+    private TableView<Leave> tblPending;
+
 
 
     private Connection connect;
@@ -226,6 +278,11 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(true);
             attendanceView.setVisible(false);
+
+            viewPending.setVisible(true);
+            viewApproved.setVisible(false);
+            viewNotApproved.setVisible(false);
+            showLeaveList();
         } else if (event.getSource() == home_attendBtn) {
             dashboardView.setVisible(false);
             staffmgmtView.setVisible(false);
@@ -526,10 +583,16 @@ public class DashboardController implements Initializable {
         user.showUserListData(tblPassword, colUsername, colUseremail, colPassword, colUsertype);
     }
 
+    public void showLeaveList() {
+        Leave leave = new Leave();
+
+        leave.showLeaveListData(tblPending, colPenRequestid, colPenStaffid, colPenLeavetype, colPenFrom, colPenTo);
+    }
+
     public void addUser() {
         User user = new User();
 
-        user.addUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        user.addUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
         showUserListData();
         resetUserText();
     }
@@ -537,7 +600,7 @@ public class DashboardController implements Initializable {
     public void deleteUser() {
         User user = new User();
 
-        user.deleteUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        user.deleteUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
         showUserListData();
         resetUserText();
     }
@@ -545,7 +608,7 @@ public class DashboardController implements Initializable {
     public void updateUser() {
         User user = new User();
 
-        user.updateUser(txtUsername, txtUseremail, txtPassword, txtUsertype);
+        user.updateUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
         showUserListData();
         resetUserText();
     }
@@ -553,7 +616,7 @@ public class DashboardController implements Initializable {
     public void selectUser() {
         User user = new User();
 
-        user.userSelect(tblPassword, txtUsername, txtUseremail, txtPassword, txtUsertype);
+        user.userSelect(tblPassword, txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
     }
 
     public void searchUser() {

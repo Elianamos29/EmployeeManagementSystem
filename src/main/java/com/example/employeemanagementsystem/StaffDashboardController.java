@@ -1,25 +1,25 @@
 package com.example.employeemanagementsystem;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.*;
 
 public class StaffDashboardController implements Initializable {
 
-    @FXML
-    private Label lblStaff;
     @FXML
     private AnchorPane RequestleaveView;
 
@@ -28,6 +28,24 @@ public class StaffDashboardController implements Initializable {
 
     @FXML
     private AnchorPane attendanceView;
+
+    @FXML
+    private ComboBox<?> combFromdate;
+
+    @FXML
+    private ComboBox<?> combLeavetype;
+
+    @FXML
+    private ComboBox<?> combTodate;
+
+    @FXML
+    private Label lblStaff;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button requestBtn;
 
     @FXML
     private Button requestleaveBtn;
@@ -39,7 +57,13 @@ public class StaffDashboardController implements Initializable {
     private AnchorPane staffdashboardView;
 
     @FXML
-    private Button logoutBtn;
+    private TextArea txtDescription;
+
+
+    private Connection connect;
+    private Statement statement;
+    private PreparedStatement prepare;
+    private ResultSet result;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,7 +91,89 @@ public class StaffDashboardController implements Initializable {
             attendanceView.setVisible(false);
             RequestleaveView.setVisible(true);
 
+            setLeaveTypeList();
+            setFromDateList();
+            setToDateList();
         }
+    }
+
+    public void requestLeave() {
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        String sql = "INSERT INTO leaverequest (staffID,leaveType,description,fromDate,toDate) VALUES(?,?,?,?,?)";
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (combLeavetype.getSelectionModel().getSelectedItem() == null
+                    || combFromdate.getSelectionModel().getSelectedItem() == null
+                    || combTodate.getSelectionModel().getSelectedItem() == null
+                    || txtDescription.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                prepare = connect.prepareStatement(sql);
+                prepare.setInt(1,getData.id);
+                prepare.setString(2, (String) combLeavetype.getSelectionModel().getSelectedItem());
+                prepare.setString(3, txtDescription.getText());
+                prepare.setString(4, (String) combFromdate.getSelectionModel().getSelectedItem());
+                prepare.setString(5, (String) combTodate.getSelectionModel().getSelectedItem());
+
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Request Successfully Sent!");
+                alert.showAndWait();
+
+            }
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    private String[] listLeaveType = {"Sick", "vacation", "other"};
+
+    public void setLeaveTypeList() {
+        List<String> lists = new ArrayList<>();
+
+        for (String data : listLeaveType) {
+            lists.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(lists);
+        combLeavetype.setItems(listData);
+    }
+
+    Date date = new Date();
+    java.sql.Date sqlDate= new java.sql.Date(date.getTime());
+    private String[] listFromDate = {String.valueOf(sqlDate), String.valueOf(sqlDate)};
+
+    public void setFromDateList() {
+        List<String> lists = new ArrayList<>();
+
+        for (String data : listFromDate) {
+            lists.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(lists);
+        combFromdate.setItems(listData);
+    }
+
+    private String[] listToDate = {String.valueOf(sqlDate), String.valueOf(sqlDate)};
+
+    public void setToDateList() {
+        List<String> lists = new ArrayList<>();
+
+        for (String data : listToDate) {
+            lists.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(lists);
+        combTodate.setItems(listData);
     }
 
     public void logout() {

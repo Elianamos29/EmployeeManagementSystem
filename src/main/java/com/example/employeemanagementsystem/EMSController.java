@@ -99,6 +99,7 @@ public class EMSController implements Initializable {
             }else{
                 if(result.next()){
                     getData.username = username.getText();
+                    getData.id = result.getInt("staffID");
                     getData.userType = result.getString("userType");
                     if (getData.userType.equals("admin")) {
                         loginAdmin();

@@ -1,6 +1,6 @@
 package com.example.employeemanagementsystem;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Employee {
     private int id;
@@ -11,7 +11,7 @@ public class Employee {
     private String email;
     private String position;
     private double salary;
-    private java.util.Date dateJoin;
+    private Date dateJoin;
 
     public Employee(int id, String fname, String lname, String gender, String department, String email, String position, double salary, java.util.Date dateJoin) {
         this.id = id;
@@ -57,7 +57,7 @@ public class Employee {
         return salary;
     }
 
-    public java.util.Date getDateJoin() {
+    public Date getDateJoin() {
         return dateJoin;
     }
 }

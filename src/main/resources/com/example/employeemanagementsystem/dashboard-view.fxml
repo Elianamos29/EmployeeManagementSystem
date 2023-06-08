@@ -120,7 +120,7 @@
                                     <DropShadow />
                                  </effect>
                               </Line>
-                              <Label fx:id="lblAdmin" layoutX="93.0" layoutY="143.0" text="adminName" />
+                              <Label fx:id="lblAdmin" layoutX="93.0" layoutY="144.0" text="adminName" />
                               <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="554.0" mnemonicParsing="false" onAction="#logout" prefHeight="31.0" prefWidth="141.0" style="-fx-background-color: transparent;" text="Logout">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
@@ -310,30 +310,31 @@
                            <children>
                               <AnchorPane layoutX="464.0" layoutY="-12.0" prefHeight="590.0" prefWidth="367.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
-                                    <TextField fx:id="txtUsername" layoutX="70.0" layoutY="91.0" prefHeight="30.0" prefWidth="200.0" promptText="username" />
-                                    <TextField fx:id="txtUseremail" layoutX="70.0" layoutY="138.0" prefHeight="30.0" prefWidth="200.0" promptText="email" />
-                                    <TextField fx:id="txtPassword" layoutX="70.0" layoutY="185.0" prefHeight="30.0" prefWidth="200.0" promptText="password" />
-                                    <Button fx:id="adduserBtn" layoutX="64.0" layoutY="295.0" mnemonicParsing="false" onAction="#addUser" prefHeight="40.0" prefWidth="70.0" text="Add">
+                                    <TextField fx:id="txtUsername" layoutX="72.0" layoutY="152.0" prefHeight="30.0" prefWidth="200.0" promptText="username" />
+                                    <TextField fx:id="txtUseremail" layoutX="72.0" layoutY="199.0" prefHeight="30.0" prefWidth="200.0" promptText="email" />
+                                    <TextField fx:id="txtPassword" layoutX="72.0" layoutY="246.0" prefHeight="30.0" prefWidth="200.0" promptText="password" />
+                                    <Button fx:id="adduserBtn" layoutX="64.0" layoutY="349.0" mnemonicParsing="false" onAction="#addUser" prefHeight="40.0" prefWidth="70.0" text="Add">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="deleteuserBtn" layoutX="196.0" layoutY="367.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="40.0" prefWidth="70.0" text="Delete">
+                                    <Button fx:id="deleteuserBtn" layoutX="196.0" layoutY="407.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="40.0" prefWidth="70.0" text="Delete">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="updateuserBtn" layoutX="64.0" layoutY="367.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="70.0" text="Update">
+                                    <Button fx:id="updateuserBtn" layoutX="64.0" layoutY="407.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="40.0" prefWidth="70.0" text="Update">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="clearuserBtn" layoutX="196.0" layoutY="295.0" mnemonicParsing="false" onAction="#resetUserText" prefHeight="40.0" prefWidth="70.0" text="Clear">
+                                    <Button fx:id="clearuserBtn" layoutX="196.0" layoutY="349.0" mnemonicParsing="false" onAction="#resetUserText" prefHeight="40.0" prefWidth="70.0" text="Clear">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <TextField fx:id="txtUsertype" layoutX="70.0" layoutY="232.0" prefHeight="30.0" prefWidth="200.0" promptText="user type" />
+                                    <TextField fx:id="txtUsertype" layoutX="72.0" layoutY="293.0" prefHeight="30.0" prefWidth="200.0" promptText="user type" />
+                                    <TextField fx:id="txtUserid" layoutX="72.0" layoutY="101.0" prefHeight="30.0" prefWidth="200.0" promptText="id" />
                                  </children></AnchorPane>
                               <AnchorPane layoutX="-4.0" layoutY="-12.0" prefHeight="591.0" prefWidth="460.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
@@ -369,30 +370,39 @@
                                     <RadioButton fx:id="notapprovedradBtn" layoutX="287.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchStatusView" text="Not Approved" toggleGroup="$status" />
                                     <AnchorPane fx:id="viewPending" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
                                        <children>
-                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblPending" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="pending" />
-                                                <TableColumn prefWidth="75.0" text="C2" />
+                                                <TableColumn fx:id="colPenRequestid" prefWidth="75.0" text="Request ID" />
+                                                <TableColumn fx:id="colPenStaffid" prefWidth="69.0" text="Staff ID" />
+                                                <TableColumn fx:id="colPenLeavetype" prefWidth="114.0" text="Leave Type" />
+                                                <TableColumn fx:id="colPenFrom" prefWidth="90.0" text="From" />
+                                                <TableColumn fx:id="colPenTo" prefWidth="85.0" text="To" />
                                              </columns>
                                           </TableView>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="viewApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
                                        <children>
-                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblApproved" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Approved" />
-                                              <TableColumn prefWidth="75.0" text="C2" />
+                                              <TableColumn fx:id="colAprRequestid" prefWidth="75.0" text="Request ID" />
+                                              <TableColumn fx:id="colAprStaffid" prefWidth="75.0" text="Staff ID" />
+                                                <TableColumn fx:id="colAprLeavetype" prefWidth="94.0" text="Leave Type" />
+                                                <TableColumn fx:id="colAprFrom" prefWidth="98.0" text="From" />
+                                                <TableColumn fx:id="colAprTo" prefWidth="91.0" text="To" />
                                             </columns>
                                           </TableView>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="viewNotApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0">
                                        <children>
-                                          <TableView layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblNotapproved" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columns>
-                                                <TableColumn prefWidth="92.0" text="Not Approved" />
-                                                <TableColumn prefWidth="58.0" text="C2" />
+                                                <TableColumn fx:id="colNaprRequestid" prefWidth="73.0" text="Request ID" />
+                                                <TableColumn fx:id="colNaprStaffid" prefWidth="73.0" text="Staff ID" />
+                                                <TableColumn fx:id="colNaprLeavetype" prefWidth="101.0" text="Leave Type" />
+                                                <TableColumn fx:id="colNaprFrom" prefWidth="93.0" text="From" />
+                                                <TableColumn fx:id="colNaprTo" prefWidth="92.0" text="To" />
                                              </columns>
                                           </TableView>
                                        </children>
