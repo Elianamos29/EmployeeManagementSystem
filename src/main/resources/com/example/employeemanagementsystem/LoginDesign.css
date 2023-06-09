@@ -1,0 +1,7 @@
+.left_anch {
+    -fx-background-color: #2f2c2c;
+}
+
+.right_anch {
+    -fx-background-color: linear-gradient(to right, #434343 0%, black 100%);
+}
