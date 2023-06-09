@@ -1,1 +1,2 @@
-# Employee-Managment-System
+# Employee Management System javaFx project
+

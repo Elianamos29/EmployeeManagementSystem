@@ -3,21 +3,22 @@ CREATE TABLE Admins (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL
 );
-CREATE TABLE Roles (
-    role_id INT PRIMARY KEY AUTO_INCREMENT,
-    role_name VARCHAR(50) NOT NULL,
-    role_salary DECIMAL(10, 2) NOT NULL
-);
 CREATE TABLE Employees (
-    employee_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    employee_id INT PRIMARY KEY,
+    firstName VARCHAR(100) NOT NULL,
+    lastName VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     department VARCHAR(100) NOT NULL,
-    designation VARCHAR(100) NOT NULL,
+    gender CHAR(1) NOT NULL,
     date_of_joining DATE NOT NULL,
-    role_id INT NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES Roles(role_id)
+    salary DECIMAL(10, 2) NOT NULL, 
 );
+CREATE TABLE Employee_Password (
+    email VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (email),
+    FOREIGN KEY (email) REFERENCES Employees(email)
+)
 CREATE TABLE Attendance (
     attendance_id INT PRIMARY KEY AUTO_INCREMENT,
     employee_id INT NOT NULL,
