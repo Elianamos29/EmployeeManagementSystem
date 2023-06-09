@@ -233,6 +233,9 @@ public class DashboardController implements Initializable {
     private Button approveLeaveBtn;
 
     @FXML
+    private Button NaproveLeaveBtn;
+
+    @FXML
     private Label lblLeaveFrom;
 
     @FXML
@@ -680,6 +683,7 @@ public class DashboardController implements Initializable {
         Leave leave = new Leave();
 
         leave.updateLeave("approved", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
+        showPendingLeaveList();
         resetLeaveDetails();
     }
 
@@ -687,6 +691,7 @@ public class DashboardController implements Initializable {
         Leave leave = new Leave();
 
         leave.updateLeave("rejected", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
+        showPendingLeaveList();
         resetLeaveDetails();
     }
 
@@ -755,6 +760,9 @@ public class DashboardController implements Initializable {
 
             showApprovedLeaveList();
             resetLeaveDetails();
+            approveLeaveBtn.setDisable(true);
+            NaproveLeaveBtn.setDisable(true);
+            txtLeaveComment.setEditable(false);
         } else if (((RadioButton)status.getSelectedToggle()).equals(notapprovedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(false);
@@ -762,6 +770,9 @@ public class DashboardController implements Initializable {
 
             showRejectedLeaveList();
             resetLeaveDetails();
+            approveLeaveBtn.setDisable(true);
+            NaproveLeaveBtn.setDisable(true);
+            txtLeaveComment.setEditable(false);
         }
     }
 

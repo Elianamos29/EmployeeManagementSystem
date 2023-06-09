@@ -120,6 +120,51 @@ public class Leave {
 
     }
 
+    public ObservableList<Leave> requestListData() {
+        ObservableList<Leave> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM leaverequest WHERE staffID = " + getData.id;
+
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Leave leave;
+
+            while (result.next()) {
+                leave = new Leave(result.getInt("requestID"),
+                    result.getInt("staffID"),
+                    result.getString("leaveType"),
+                    result.getString("description"),
+                    result.getDate("fromDate"),
+                    result.getDate("toDate"),
+                    result.getString("status"),
+                    result.getString("comment"));
+                listData.add(leave);
+
+                if (result.getString("status").equals("pending"))
+                    getData.hasPendingRequest = true;
+            }
+        } catch (Exception e) {e.printStackTrace();}
+        return listData;
+}
+    private static ObservableList<Leave> requestList;
+
+    public void showRequestHistory(TableView<Leave> tblRequest, TableColumn<Leave, Integer> colHistoryRequestid, TableColumn<Leave, String> colLeavetype, TableColumn<Leave, Date> colFrom, TableColumn<Leave, Date> colTo, TableColumn<Leave, String> colDescription, TableColumn<Leave, String> colStatus, TableColumn<Leave, String> colComment) {
+        requestList = requestListData();
+
+        colHistoryRequestid.setCellValueFactory(new PropertyValueFactory<>("requestID"));
+        colLeavetype.setCellValueFactory(new PropertyValueFactory<>("leaveType"));
+        colFrom.setCellValueFactory(new PropertyValueFactory<>("fromDate"));
+        colTo.setCellValueFactory(new PropertyValueFactory<>("toDate"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        tblRequest.setItems(requestList);
+    }
+
     public void leaveSelect(TableView<Leave> tableView, Label lblRequestid, Label lblStaffid, Label lblStaffname, Label lblLeavetype, Label lblFrom, Label lblTo, TextArea txtDescription) {
         Leave leaveSelected = tableView.getSelectionModel().getSelectedItem();
         int num = tableView.getSelectionModel().getSelectedIndex();
