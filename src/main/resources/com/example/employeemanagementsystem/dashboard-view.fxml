@@ -7,6 +7,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
@@ -358,7 +359,36 @@
                         </AnchorPane>
                         <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;">
                            <children>
-                              <AnchorPane layoutX="469.0" layoutY="-7.0" prefHeight="588.0" prefWidth="362.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;" />
+                              <AnchorPane layoutX="469.0" layoutY="-7.0" prefHeight="582.0" prefWidth="362.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                                 <children>
+                                    <Label layoutX="101.0" layoutY="37.0" text="Leave Request Details">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="27.0" layoutY="114.0" text="Request ID" />
+                                    <Label layoutX="140.0" layoutY="114.0" text="Staff ID" />
+                                    <Label layoutX="136.0" layoutY="188.0" text="From Date:" />
+                                    <Label layoutX="27.0" layoutY="188.0" text="Leave Type" />
+                                    <Label layoutX="245.0" layoutY="114.0" text="Staff Name" />
+                                    <Label fx:id="lblLeaveRequestid" layoutX="27.0" layoutY="95.0" />
+                                    <Label fx:id="lblLeaveStaffname" layoutX="245.0" layoutY="95.0" text=" " />
+                                    <Label layoutX="253.0" layoutY="188.0" text="To Date:" />
+                                    <TextArea fx:id="txtLeaveDescription" editable="false" layoutX="18.0" layoutY="228.0" prefHeight="121.0" prefWidth="305.0" promptText="Description" />
+                                    <Button fx:id="approveLeaveBtn" layoutX="56.0" layoutY="520.0" mnemonicParsing="false" onAction="#approveLeaveRequest" text="Approve" />
+                                    <Button fx:id="NaproveLeaveBtn" layoutX="221.0" layoutY="520.0" mnemonicParsing="false" onAction="#rejectLeaveRequest" text="Don't Approve" />
+                                    <Line endX="-34.0" endY="1.0" fill="#aaaaaa" layoutX="127.0" layoutY="113.0" startX="-108.0" startY="1.0" strokeWidth="0.5" />
+                                    <Line endX="-15.0" endY="1.0" layoutX="210.0" layoutY="112.0" startX="-80.0" startY="1.0" strokeWidth="0.5" />
+                                    <Line endX="-4.0" endY="1.0" fill="#aaaaaa" layoutX="326.0" layoutY="111.0" startX="-110.0" startY="1.0" strokeWidth="0.5" />
+                                    <Line endX="-9.0" endY="1.0" fill="#aaaaaa" layoutX="328.0" layoutY="185.0" startX="-97.0" startY="1.0" strokeWidth="0.5" />
+                                    <Line endX="-9.0" endY="1.0" layoutX="210.0" layoutY="186.0" startX="-80.0" startY="1.0" strokeWidth="0.5" />
+                                    <Line endX="-25.0" endY="1.0" fill="#aaaaaa" layoutX="126.0" layoutY="187.0" startX="-110.0" startY="1.0" strokeWidth="0.5" />
+                                    <TextArea fx:id="txtLeaveComment" layoutX="60.0" layoutY="409.0" prefHeight="72.0" prefWidth="221.0" promptText="Comment" />
+                                    <Label fx:id="lblLeaveStaffid" layoutX="130.0" layoutY="95.0" text=" " />
+                                    <Label fx:id="lblLeaveType" layoutX="29.0" layoutY="169.0" text=" " />
+                                    <Label fx:id="lblLeaveFrom" layoutX="133.0" layoutY="169.0" text=" " />
+                                    <Label fx:id="lblLeaveTo" layoutX="246.0" layoutY="169.0" text=" " />
+                                 </children></AnchorPane>
                               <AnchorPane layoutY="-8.0" prefHeight="586.0" prefWidth="460.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
                                     <RadioButton fx:id="pendingradBtn" layoutX="51.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchStatusView" selected="true" text="Pending">
@@ -368,9 +398,9 @@
                                     </RadioButton>
                                     <RadioButton fx:id="approvedradBtn" layoutX="171.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchStatusView" text="Approved" toggleGroup="$status" />
                                     <RadioButton fx:id="notapprovedradBtn" layoutX="287.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchStatusView" text="Not Approved" toggleGroup="$status" />
-                                    <AnchorPane fx:id="viewPending" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
+                                    <AnchorPane fx:id="viewPending" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0">
                                        <children>
-                                          <TableView fx:id="tblPending" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblPending" layoutX="17.0" layoutY="28.0" onMouseClicked="#selectPendingLeave" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columns>
                                                 <TableColumn fx:id="colPenRequestid" prefWidth="75.0" text="Request ID" />
                                                 <TableColumn fx:id="colPenStaffid" prefWidth="69.0" text="Staff ID" />
@@ -383,7 +413,7 @@
                                     </AnchorPane>
                                     <AnchorPane fx:id="viewApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
                                        <children>
-                                          <TableView fx:id="tblApproved" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblApproved" layoutX="17.0" layoutY="28.0" onMouseClicked="#selectApprovedLeave" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
                                               <TableColumn fx:id="colAprRequestid" prefWidth="75.0" text="Request ID" />
                                               <TableColumn fx:id="colAprStaffid" prefWidth="75.0" text="Staff ID" />
@@ -394,9 +424,9 @@
                                           </TableView>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="viewNotApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0">
+                                    <AnchorPane fx:id="viewNotApproved" layoutX="13.0" layoutY="71.0" prefHeight="501.0" prefWidth="434.0" visible="false">
                                        <children>
-                                          <TableView fx:id="tblNotapproved" layoutX="17.0" layoutY="28.0" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <TableView fx:id="tblNotapproved" layoutX="17.0" layoutY="28.0" onMouseClicked="#selectRejectedLeave" prefHeight="501.0" prefWidth="434.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columns>
                                                 <TableColumn fx:id="colNaprRequestid" prefWidth="73.0" text="Request ID" />
                                                 <TableColumn fx:id="colNaprStaffid" prefWidth="73.0" text="Staff ID" />

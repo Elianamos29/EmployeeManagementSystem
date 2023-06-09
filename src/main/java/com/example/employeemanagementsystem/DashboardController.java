@@ -229,6 +229,33 @@ public class DashboardController implements Initializable {
     @FXML
     private TableView<Leave> tblPending;
 
+    @FXML
+    private Button approveLeaveBtn;
+
+    @FXML
+    private Label lblLeaveFrom;
+
+    @FXML
+    private Label lblLeaveRequestid;
+
+    @FXML
+    private Label lblLeaveStaffid;
+
+    @FXML
+    private Label lblLeaveStaffname;
+
+    @FXML
+    private Label lblLeaveTo;
+
+    @FXML
+    private Label lblLeaveType;
+
+    @FXML
+    private TextArea txtLeaveComment;
+
+    @FXML
+    private TextArea txtLeaveDescription;
+
 
 
     private Connection connect;
@@ -282,7 +309,7 @@ public class DashboardController implements Initializable {
             viewPending.setVisible(true);
             viewApproved.setVisible(false);
             viewNotApproved.setVisible(false);
-            showLeaveList();
+            showPendingLeaveList();
         } else if (event.getSource() == home_attendBtn) {
             dashboardView.setVisible(false);
             staffmgmtView.setVisible(false);
@@ -317,8 +344,8 @@ public class DashboardController implements Initializable {
                 alert.showAndWait();
             } else {
 
-                String check = "SELECT id FROM employee WHERE id = '"
-                        + txtID.getText() + "'";
+                String check = "SELECT id FROM employee WHERE id = "
+                        + txtID.getText();
 
                 statement = connect.createStatement();
                 result = statement.executeQuery(check);
@@ -583,10 +610,22 @@ public class DashboardController implements Initializable {
         user.showUserListData(tblPassword, colUsername, colUseremail, colPassword, colUsertype);
     }
 
-    public void showLeaveList() {
+    public void showPendingLeaveList() {
         Leave leave = new Leave();
 
-        leave.showLeaveListData(tblPending, colPenRequestid, colPenStaffid, colPenLeavetype, colPenFrom, colPenTo);
+        leave.showLeaveListData("pending",tblPending, colPenRequestid, colPenStaffid, colPenLeavetype, colPenFrom, colPenTo);
+    }
+
+    public void showApprovedLeaveList() {
+        Leave leave = new Leave();
+
+        leave.showLeaveListData("approved",tblApproved, colAprRequestid, colAprStaffid, colAprLeavetype, colAprFrom, colAprTo);
+    }
+
+    public void showRejectedLeaveList() {
+        Leave leave = new Leave();
+
+        leave.showLeaveListData("rejected",tblNotapproved, colNaprRequestid, colNaprStaffid, colNaprLeavetype, colNaprFrom, colNaprTo);
     }
 
     public void addUser() {
@@ -617,6 +656,36 @@ public class DashboardController implements Initializable {
         User user = new User();
 
         user.userSelect(tblPassword, txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
+    }
+
+    public void selectPendingLeave() {
+        Leave leave = new Leave();
+
+        leave.leaveSelect(tblPending, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void selectApprovedLeave() {
+        Leave leave = new Leave();
+
+        leave.leaveSelect(tblApproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void selectRejectedLeave() {
+        Leave leave = new Leave();
+
+        leave.leaveSelect(tblNotapproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void approveLeaveRequest() {
+        Leave leave = new Leave();
+
+        leave.updateLeave("approved", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
+    }
+
+    public void rejectLeaveRequest() {
+        Leave leave = new Leave();
+
+        leave.updateLeave("rejected", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
     }
 
     public void searchUser() {
@@ -652,6 +721,7 @@ public class DashboardController implements Initializable {
     }
 
     public void resetUserText() {
+        txtUserid.setText("");
         txtUsername.setText("");
         txtUseremail.setText("");
         txtPassword.setText("");
@@ -663,14 +733,20 @@ public class DashboardController implements Initializable {
             viewPending.setVisible(true);
             viewApproved.setVisible(false);
             viewNotApproved.setVisible(false);
+
+            showPendingLeaveList();
         } else if (((RadioButton)status.getSelectedToggle()).equals(approvedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(true);
             viewNotApproved.setVisible(false);
+
+            showApprovedLeaveList();
         } else if (((RadioButton)status.getSelectedToggle()).equals(notapprovedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(false);
             viewNotApproved.setVisible(true);
+
+            showRejectedLeaveList();
         }
     }
 
