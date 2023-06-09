@@ -680,12 +680,14 @@ public class DashboardController implements Initializable {
         Leave leave = new Leave();
 
         leave.updateLeave("approved", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
+        resetLeaveDetails();
     }
 
     public void rejectLeaveRequest() {
         Leave leave = new Leave();
 
         leave.updateLeave("rejected", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
+        resetLeaveDetails();
     }
 
     public void searchUser() {
@@ -728,6 +730,16 @@ public class DashboardController implements Initializable {
         txtUsertype.setText("");
     }
 
+    public void resetLeaveDetails() {
+        lblLeaveRequestid.setText("");
+        lblLeaveStaffid.setText("");
+        lblLeaveStaffname.setText("");
+        lblLeaveFrom.setText("");
+        lblLeaveTo.setText("");
+        txtLeaveDescription.setText("");
+        txtLeaveComment.setText("");
+    }
+
     public void switchStatusView() {
         if (((RadioButton)status.getSelectedToggle()).equals(pendingradBtn)) {
             viewPending.setVisible(true);
@@ -735,18 +747,21 @@ public class DashboardController implements Initializable {
             viewNotApproved.setVisible(false);
 
             showPendingLeaveList();
+            resetLeaveDetails();
         } else if (((RadioButton)status.getSelectedToggle()).equals(approvedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(true);
             viewNotApproved.setVisible(false);
 
             showApprovedLeaveList();
+            resetLeaveDetails();
         } else if (((RadioButton)status.getSelectedToggle()).equals(notapprovedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(false);
             viewNotApproved.setVisible(true);
 
             showRejectedLeaveList();
+            resetLeaveDetails();
         }
     }
 
