@@ -3,6 +3,7 @@ package com.example.employeemanagementsystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,7 +103,21 @@ public class Attendance {
         //todo
     }
 
-    public void attendanceSelect() {
+    public void attendanceSelect(TableView<Attendance> tblAttendance) {
+        Attendance attendanceSelected = tblAttendance.getSelectionModel().getSelectedItem();
+        int num = tblAttendance.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        Employee emp = getDetails(attendanceSelected.getStaffID());
         //todo
+    }
+
+    private Employee getDetails(int staffID) {
+        //todo
+
+        return null;
     }
 }

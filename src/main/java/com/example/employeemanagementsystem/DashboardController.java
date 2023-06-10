@@ -258,42 +258,53 @@ public class DashboardController implements Initializable {
 
     @FXML
     private TextArea txtLeaveDescription;
+    @FXML
+    private TableColumn<Attendance, String> colAttendanceName;
 
     @FXML
-    private TableColumn<?, ?> colAtHistoryStatus;
+    private TableColumn<Attendance, Integer> colAttendanceStaffid;
 
     @FXML
-    private TableColumn<?, ?> colAtHistoryTimein;
+    private TableColumn<Attendance, String> colAttendanceStatus;
 
     @FXML
-    private TableColumn<?, ?> colAtHistoryTimeout;
+    private TableColumn<Attendance, Date> colAttendanceTimein;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceDate;
+    private TableColumn<Attendance, Date> colAttendanceTimeout;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceName;
+    private TableView<Attendance> tblAttendance;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceStaff;
+    private ComboBox<?> combChooseDate;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceStaffid;
+    private Label lblAtDatejoin;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceStatus;
+    private Label lblAtDepartment;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceTimein;
+    private Label lblAtEmail;
 
     @FXML
-    private TableColumn<?, ?> colAttendanceTimeout;
+    private Label lblAtGender;
 
     @FXML
-    private TableView<?> tblAttendance;
+    private Label lblAtID;
 
     @FXML
-    private TableView<?> tblAttendanceHistory;
+    private Label lblAtName;
+
+    @FXML
+    private Label lblAtPosition;
+
+    @FXML
+    private Label lblAtSalary;
+
+    @FXML
+    private Label lblAtStatus;
 
 
 
