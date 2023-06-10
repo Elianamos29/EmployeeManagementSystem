@@ -3,7 +3,10 @@ package com.example.employeemanagementsystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,8 +74,15 @@ public class Attendance {
     public ObservableList<Attendance> attendancesListData(ComboBox<?> combChooseDate) throws ParseException {
         ObservableList<Attendance> listData = FXCollections.observableArrayList();
         String date1 = (String) combChooseDate.getSelectionModel().getSelectedItem();
-        Date today = new SimpleDateFormat("yy/MM/dd").parse(date1.replace("-", "/"));
-        java.sql.Date sqlDate = new java.sql.Date(today.getTime());
+        Date dateSet;
+
+        if (date1 == null) {
+            dateSet = new Date();
+        } else {
+            dateSet = new SimpleDateFormat("yy/MM/dd").parse(date1.replace("-", "/"));
+        }
+
+        java.sql.Date sqlDate = new java.sql.Date(dateSet.getTime());
 
         String sql = "SELECT * FROM attendance WHERE date = '" + sqlDate + "'";
         connect = database.connectDb();
@@ -88,7 +98,7 @@ public class Attendance {
                         result.getInt("staffID"),
                         result.getString("name"),
                         result.getString("status"),
-                        result.getTime("timeIN"),
+                        result.getTime("timeIn"),
                         result.getTime("timeOut"));
                 listData.add(attendance);
             }
@@ -99,11 +109,21 @@ public class Attendance {
 
     private static ObservableList<Attendance> attendanceList;
 
-    public void showAttendanceList() {
-        //todo
+    public void showAttendanceList(ComboBox<?> combChooseDate, TableView<Attendance> tblAttendance, TableColumn<Attendance, Integer> colAttendanceStaffid, TableColumn<Attendance, String> colAttendanceName,
+                                   TableColumn<Attendance, String> colAttendanceStatus, TableColumn<Attendance, Date> colAttendanceTimein, TableColumn<Attendance, Date> colAttendanceTimeout) throws ParseException {
+        attendanceList = attendancesListData(combChooseDate);
+
+        colAttendanceStaffid.setCellValueFactory(new PropertyValueFactory<>("staffID"));
+        colAttendanceName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAttendanceStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colAttendanceTimein.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
+        colAttendanceTimeout.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+
+        tblAttendance.setItems(attendanceList);
     }
 
-    public void attendanceSelect(TableView<Attendance> tblAttendance) {
+    public void attendanceSelect(TableView<Attendance> tblAttendance, Label lblAtID, Label lblAtName, Label lblAtGender, Label lblAtEmail,
+                                 Label lblAtDepartment, Label lblAtPosition, Label lblAtSalary, Label lblAtStatus, Label lblAtDatejoin) {
         Attendance attendanceSelected = tblAttendance.getSelectionModel().getSelectedItem();
         int num = tblAttendance.getSelectionModel().getSelectedIndex();
 
@@ -112,11 +132,42 @@ public class Attendance {
         }
 
         Employee emp = getDetails(attendanceSelected.getStaffID());
-        //todo
+
+        if (emp != null) {
+            lblAtID.setText(String.valueOf(emp.getId()));
+            lblAtName.setText(emp.getFname() + " " + emp.getLname());
+            lblAtGender.setText(emp.getGender());
+            lblAtEmail.setText(emp.getEmail());
+            lblAtDepartment.setText(emp.getDepartment());
+            lblAtPosition.setText(emp.getPosition());
+            lblAtSalary.setText(String.valueOf(emp.getSalary()));
+            lblAtStatus.setText(attendanceSelected.getStatus());
+            lblAtDatejoin.setText(String.valueOf(emp.getDateJoin()));
+        }
     }
 
     private Employee getDetails(int staffID) {
-        //todo
+        String sql = "SELECT * FROM employee WHERE id = " + staffID;
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Employee employee;
+            if (result.next()) {
+                return new Employee(result.getInt("id"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getString("department"),
+                        result.getString("email"),
+                        result.getString("position"),
+                        result.getDouble("salary"),
+                        result.getDate("dateJoining"));
+            }
+
+        } catch (Exception e) {e.printStackTrace();}
 
         return null;
     }

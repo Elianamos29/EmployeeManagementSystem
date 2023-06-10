@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.*;
 
 public class DashboardController implements Initializable {
@@ -326,7 +327,7 @@ public class DashboardController implements Initializable {
     }
 
 
-    public void switchView(ActionEvent event) {
+    public void switchView(ActionEvent event) throws ParseException {
         if (event.getSource() == home_dashbordBtn) {
             dashboardView.setVisible(true);
             staffmgmtView.setVisible(false);
@@ -367,6 +368,9 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(true);
+
+            setChooseDateList();
+            showAttendanceList();
         }
     }
 
@@ -762,6 +766,18 @@ public class DashboardController implements Initializable {
         combGender.setItems(listData);
     }
 
+    public void showAttendanceList() throws ParseException {
+        Attendance attendance = new Attendance();
+
+        attendance.showAttendanceList(combChooseDate, tblAttendance, colAttendanceStaffid, colAttendanceName, colAttendanceStatus, colAttendanceTimein, colAttendanceTimeout);
+    }
+
+    public void selectAttendance() {
+        Attendance attendance = new Attendance();
+
+        attendance.attendanceSelect(tblAttendance, lblAtID, lblAtName, lblAtGender, lblAtEmail, lblAtDepartment, lblAtPosition, lblAtSalary, lblAtStatus, lblAtDatejoin);
+    }
+
 
 
     public void resetText() {
@@ -801,6 +817,9 @@ public class DashboardController implements Initializable {
 
             showPendingLeaveList();
             resetLeaveDetails();
+            approveLeaveBtn.setDisable(false);
+            NaproveLeaveBtn.setDisable(false);
+            txtLeaveComment.setEditable(true);
         } else if (((RadioButton)status.getSelectedToggle()).equals(approvedradBtn)) {
             viewPending.setVisible(false);
             viewApproved.setVisible(true);
@@ -822,6 +841,50 @@ public class DashboardController implements Initializable {
             NaproveLeaveBtn.setDisable(true);
             txtLeaveComment.setEditable(false);
         }
+    }
+
+    public Date subtractDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+        return cal.getTime();
+    }
+
+    Date curDate = new Date();
+
+    public ArrayList<Date> dateList() {
+        ArrayList<Date> dates = new ArrayList<>();
+
+        for (int i = 1; i <= 15; i++) {
+            dates.add(curDate);
+            curDate = subtractDays(curDate, -1);
+        }
+        curDate = new Date();
+
+        return dates;
+    }
+
+    java.sql.Date sqlDate;
+
+    public ArrayList<String> listDate() {
+        ArrayList<Date> datelist = dateList();
+        ArrayList<String> listDate = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            sqlDate = new java.sql.Date(datelist.get(i).getTime());
+            listDate.add(String.valueOf(sqlDate));
+        }
+
+        return listDate;
+    }
+
+    public void setChooseDateList() {
+        ArrayList<String> listdate = listDate();
+
+        List<String> lists = new ArrayList<>(listdate);
+
+        ObservableList listData = FXCollections.observableArrayList(lists);
+        combChooseDate.setItems(listData);
     }
 
     public void logout() {
