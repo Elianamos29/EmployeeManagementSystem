@@ -357,7 +357,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;">
+                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;" visible="false">
                            <children>
                               <AnchorPane layoutX="469.0" layoutY="-7.0" prefHeight="582.0" prefWidth="362.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
@@ -440,16 +440,42 @@
                                  </children></AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="attendanceView" layoutX="30.0" layoutY="27.0" prefHeight="587.0" prefWidth="832.0" visible="false">
+                        <AnchorPane fx:id="attendanceView" layoutX="30.0" layoutY="27.0" prefHeight="587.0" prefWidth="832.0">
                            <children>
-                              <AnchorPane layoutX="-4.0" layoutY="-12.0" prefHeight="496.0" prefWidth="830.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                              <AnchorPane layoutX="-15.0" layoutY="-22.0" prefHeight="586.0" prefWidth="422.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>
-                                    <TableView layoutX="389.0" layoutY="32.0" prefHeight="276.0" prefWidth="397.0">
+                                    <TableView fx:id="tblAttendance" layoutX="14.0" layoutY="50.0" prefHeight="522.0" prefWidth="397.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="C1" />
-                                          <TableColumn prefWidth="75.0" text="C2" />
+                                          <TableColumn fx:id="colAttendanceStaffid" prefWidth="75.0" text="Staff ID" />
+                                          <TableColumn fx:id="colAttendanceName" prefWidth="75.0" text="Name" />
+                                          <TableColumn fx:id="colAttendanceStatus" prefWidth="75.0" text="Status" />
+                                          <TableColumn fx:id="colAttendanceTimein" prefWidth="92.0" text="Time IN" />
+                                          <TableColumn fx:id="colAttendanceTimeout" prefWidth="78.0" text="Time Out" />
                                        </columns>
                                     </TableView>
+                                    <Label layoutX="153.0" layoutY="23.0" text="Attendance">
+                                       <font>
+                                          <Font name="Arial Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="416.0" layoutY="-22.0" prefHeight="586.0" prefWidth="400.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                                 <children>
+                                    <TableView fx:id="tblAttendanceHistory" layoutX="14.0" layoutY="50.0" prefHeight="522.0" prefWidth="376.0">
+                                       <columns>
+                                          <TableColumn fx:id="colAttendanceDate" prefWidth="75.0" text="Date" />
+                                          <TableColumn fx:id="colAttendanceStaff" prefWidth="84.0" text="Staff Name" />
+                                          <TableColumn fx:id="colAtHistoryStatus" prefWidth="66.0" text="Status" />
+                                          <TableColumn fx:id="colAtHistoryTimein" prefWidth="77.0" text="Time IN" />
+                                          <TableColumn fx:id="colAtHistoryTimeout" prefWidth="72.0" text="Time Out" />
+                                       </columns>
+                                    </TableView>
+                                    <Label layoutX="109.0" layoutY="22.0" text="Staff Attendance History">
+                                       <font>
+                                          <Font name="Arial Bold" size="16.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children>

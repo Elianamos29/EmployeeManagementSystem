@@ -259,6 +259,43 @@ public class DashboardController implements Initializable {
     @FXML
     private TextArea txtLeaveDescription;
 
+    @FXML
+    private TableColumn<?, ?> colAtHistoryStatus;
+
+    @FXML
+    private TableColumn<?, ?> colAtHistoryTimein;
+
+    @FXML
+    private TableColumn<?, ?> colAtHistoryTimeout;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceDate;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceName;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceStaff;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceStaffid;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceStatus;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceTimein;
+
+    @FXML
+    private TableColumn<?, ?> colAttendanceTimeout;
+
+    @FXML
+    private TableView<?> tblAttendance;
+
+    @FXML
+    private TableView<?> tblAttendanceHistory;
+
+
 
 
     private Connection connect;
