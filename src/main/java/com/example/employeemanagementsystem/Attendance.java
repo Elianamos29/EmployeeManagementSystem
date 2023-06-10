@@ -2,11 +2,14 @@ package com.example.employeemanagementsystem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Attendance {
@@ -64,9 +67,10 @@ public class Attendance {
         //todo
     }
 
-    public ObservableList<Attendance> attendancesListData() {
+    public ObservableList<Attendance> attendancesListData(ComboBox<?> combChooseDate) throws ParseException {
         ObservableList<Attendance> listData = FXCollections.observableArrayList();
-        Date today = new Date();
+        String date1 = (String) combChooseDate.getSelectionModel().getSelectedItem();
+        Date today = new SimpleDateFormat("yy/MM/dd").parse(date1.replace("-", "/"));
         java.sql.Date sqlDate = new java.sql.Date(today.getTime());
 
         String sql = "SELECT * FROM attendance WHERE date = '" + sqlDate + "'";
@@ -95,37 +99,6 @@ public class Attendance {
     private static ObservableList<Attendance> attendanceList;
 
     public void showAttendanceList() {
-        //todo
-    }
-
-    public ObservableList<Attendance> attendancesHistoryListData(int staffID) {
-        ObservableList<Attendance> listData = FXCollections.observableArrayList();
-        Date date1 = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date1.getTime());
-
-        String sql = "SELECT * FROM attendance WHERE staffID = " + staffID;
-        connect = database.connectDb();
-
-        try {
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            Attendance attendance;
-            while (result.next()) {
-                attendance = new Attendance(result.getDate("date"),
-                        result.getInt("staffID"),
-                        result.getString("name"),
-                        result.getString("status"),
-                        result.getTime("timeIN"),
-                        result.getTime("timeOut"));
-                listData.add(attendance);
-            }
-        } catch (Exception e) {e.printStackTrace();}
-
-        return listData;
-    }
-
-    public void showStaffAtendanceHistory() {
         //todo
     }
 
