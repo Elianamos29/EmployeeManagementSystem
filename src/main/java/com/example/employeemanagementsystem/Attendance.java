@@ -2,16 +2,10 @@ package com.example.employeemanagementsystem;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,12 +57,92 @@ public class Attendance {
         return timeOut;
     }
 
-    public void markTimeIn() {
-        //todo
+    public void timeIn(CheckBox checkTimein) {
+        Date date = new Date();
+        java.sql.Time sqlTime = new Time(date.getTime());
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String sql = "INSERT INTO attendance (date,staffID,name,status,timeIn) VALUES(?,?,?,?,?)";
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            String check = "SELECT staffID FROM attendance WHERE staffID = "
+                    + getData.id + " and date = '" + sqlDate + "'";
+
+            statement = connect.createStatement();
+            result = statement.executeQuery(check);
+
+            if (result.next()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("You have already marked your time in.");
+                alert.showAndWait();
+            } else {
+
+                Employee emp = getDetails(getData.id);
+
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, String.valueOf(sqlDate));
+                prepare.setInt(2, getData.id);
+                prepare.setString(3,emp.getFname() + " " + emp.getLname());
+                prepare.setString(4, "active");
+                prepare.setString(5, String.valueOf(sqlTime));
+
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully Marked In!");
+                alert.showAndWait();
+
+                checkTimein.setDisable(true);
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
-    public void markTimeOut() {
-        //todo
+    public void timeOut(CheckBox checkTimeout) {
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Time sqlTime = new java.sql.Time(date.getTime());
+        String sql = "UPDATE attendance SET timeOut = '" + sqlTime + "' WHERE date = '" + sqlDate + "' and staffID = " + getData.id;
+
+        connect = database.connectDb();
+        try {
+            Alert alert;
+            String check = "SELECT * FROM attendance WHERE date = '" + sqlDate + "' and staffID = " + getData.id;
+            statement = connect.createStatement();
+            result = statement.executeQuery(check);
+
+            if (result.next()) {
+                if (result.getTime("timeOut") == null) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Marked Out!");
+                    alert.showAndWait();
+
+                    checkTimeout.setDisable(true);
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("You have already marked time out.");
+                    alert.showAndWait();
+                }
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("You haven't marked time in.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     public ObservableList<Attendance> attendancesListData(ComboBox<?> combChooseDate) throws ParseException {

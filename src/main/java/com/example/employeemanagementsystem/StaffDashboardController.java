@@ -89,6 +89,69 @@ public class StaffDashboardController implements Initializable {
     @FXML
     private TextArea txtDescription;
 
+    @FXML
+    private CheckBox checkTimein;
+
+    @FXML
+    private CheckBox checkTimeout;
+
+    @FXML
+    private Button changePasswordBtn;
+
+    @FXML
+    private Label lblDetailsDept;
+
+    @FXML
+    private Label lblDetailsDoJ;
+
+    @FXML
+    private Label lblDetailsEmail;
+
+    @FXML
+    private Label lblDetailsFname;
+
+    @FXML
+    private Label lblDetailsGender;
+
+    @FXML
+    private Label lblDetailsLname;
+
+    @FXML
+    private Label lblDetailsPos;
+
+    @FXML
+    private Label lblDetailsSalary;
+
+    @FXML
+    private Label lblStaffName;
+
+    @FXML
+    private Label lblStaffPosition;
+
+    @FXML
+    private Label lblStaffid;
+
+    @FXML
+    private AnchorPane myDetailsView;
+
+    @FXML
+    private AnchorPane passwordChangeView;
+
+    @FXML
+    private Label lblDetailsID;
+
+    @FXML
+    private Button changeBtn;
+    @FXML
+    private TextField txtConfirmPassword;
+    @FXML
+    private TextField txtNewPassword;
+    @FXML
+    private TextField txtNewUsername;
+    @FXML
+    private Button detailsBtn;
+
+
 
     private Connection connect;
     private Statement statement;
@@ -98,10 +161,50 @@ public class StaffDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         staffdashboardView.setVisible(true);
-        attendanceView.setVisible(false);
         RequestleaveView.setVisible(false);
-        User.showUserName(lblStaff);
+        myDetailsView.setVisible(true);
+        passwordChangeView.setVisible(false);
 
+        User.showUserName(lblStaff);
+        showEmployeeDetails();
+
+    }
+
+    public void showEmployeeDetails() {
+        Employee emp = new Employee();
+
+        Employee employee = emp.getEmployeeDetails(getData.id);
+
+        lblStaffid.setText(String.valueOf(employee.getId()));
+        lblStaffName.setText(employee.getFname() + " " + employee.getLname());
+        lblStaffPosition.setText(employee.getPosition());
+
+        lblDetailsID.setText(String.valueOf(employee.getId()));
+        lblDetailsFname.setText(employee.getFname());
+        lblDetailsLname.setText(employee.getLname());
+        lblDetailsGender.setText(employee.getGender());
+        lblDetailsEmail.setText(employee.getEmail());
+        lblDetailsDept.setText(employee.getDepartment());
+        lblDetailsPos.setText(employee.getPosition());
+        lblDetailsSalary.setText(String.valueOf(employee.getSalary()));
+        lblDetailsDoJ.setText(String.valueOf(employee.getDateJoin()));
+
+    }
+
+    public void changeView(ActionEvent event) {
+        if (event.getSource() == detailsBtn) {
+            myDetailsView.setVisible(true);
+            passwordChangeView.setVisible(false);
+        } else if (event.getSource() == changePasswordBtn) {
+            myDetailsView.setVisible(false);
+            passwordChangeView.setVisible(true);
+        }
+    }
+
+    public void changeUserPassword() {
+        User user = new User();
+
+        user.changePassword(txtNewUsername, txtNewPassword, txtConfirmPassword);
     }
 
     public void showRequestHistory() {
@@ -113,18 +216,14 @@ public class StaffDashboardController implements Initializable {
     public void switchView(ActionEvent event) {
         if (event.getSource() == staffdashboardBtn) {
             staffdashboardView.setVisible(true);
-            attendanceView.setVisible(false);
             RequestleaveView.setVisible(false);
+            myDetailsView.setVisible(true);
+            passwordChangeView.setVisible(false);
 
-
-        } else if (event.getSource() == attendanceBtn) {
-            staffdashboardView.setVisible(false);
-            attendanceView.setVisible(true);
-            RequestleaveView.setVisible(false);
+            showEmployeeDetails();
 
         } else if (event.getSource() == requestleaveBtn) {
             staffdashboardView.setVisible(false);
-            attendanceView.setVisible(false);
             RequestleaveView.setVisible(true);
 
             setLeaveTypeList();
@@ -269,6 +368,18 @@ public class StaffDashboardController implements Initializable {
 
         ObservableList listData = FXCollections.observableArrayList(lists);
         combTodate.setItems(listData);
+    }
+
+    public void markTimeIn() {
+        Attendance attendance = new Attendance();
+
+        attendance.timeIn(checkTimein);
+    }
+
+    public void markTimeOut() {
+        Attendance attendance = new Attendance();
+
+        attendance.timeOut(checkTimeout);
     }
 
     public void logout() {

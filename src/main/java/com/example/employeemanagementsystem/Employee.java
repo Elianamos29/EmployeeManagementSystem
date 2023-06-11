@@ -1,5 +1,9 @@
 package com.example.employeemanagementsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Employee {
@@ -12,6 +16,13 @@ public class Employee {
     private String position;
     private double salary;
     private Date dateJoin;
+
+    private Connection connect;
+    private Statement statement;
+    private PreparedStatement prepare;
+    private ResultSet result;
+
+    public Employee() {}
 
     public Employee(int id, String fname, String lname, String gender, String department, String email, String position, double salary, java.util.Date dateJoin) {
         this.id = id;
@@ -59,5 +70,31 @@ public class Employee {
 
     public Date getDateJoin() {
         return dateJoin;
+    }
+
+    public Employee getEmployeeDetails(int staffID) {
+        String sql = "SELECT * FROM employee WHERE id = " + staffID;
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Employee employee;
+            if (result.next()) {
+                return new Employee(result.getInt("id"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getString("department"),
+                        result.getString("email"),
+                        result.getString("position"),
+                        result.getDouble("salary"),
+                        result.getDate("dateJoining"));
+            }
+
+        } catch (Exception e) {e.printStackTrace();}
+
+        return null;
     }
 }

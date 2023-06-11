@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -16,6 +17,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.employeemanagementsystem.StaffDashboardController">
@@ -48,15 +50,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="attendanceBtn" layoutX="25.0" layoutY="304.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Attendance">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <Button fx:id="requestleaveBtn" layoutX="25.0" layoutY="351.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Request Leave">
+                              <Button fx:id="requestleaveBtn" layoutX="23.0" layoutY="311.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Request Leave">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -73,7 +67,7 @@
                                     <DropShadow />
                                  </effect>
                               </Line>
-                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="13.0" layoutY="561.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent;" text="Logout">
+                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="7.0" layoutY="558.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: transparent;" text="Logout">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -99,7 +93,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="staffdashboardView" layoutX="76.0" layoutY="164.0" prefHeight="600.0" prefWidth="850.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="staffdashboardView" layoutX="76.0" layoutY="164.0" prefHeight="600.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="827.0" style="-fx-background-color: #fff; -fx-background-radius: 8px; -fx-border-radius: 8px;">
                                  <effect>
@@ -111,40 +105,150 @@
                                           <Image url="@admin.png" />
                                        </image>
                                     </ImageView>
-                                 </children></AnchorPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="attendanceView" layoutX="111.0" layoutY="165.0" prefHeight="600.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="583.0" prefWidth="436.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #f7f7f7;">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <children>
-                                    <CheckBox layoutX="90.0" layoutY="196.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Mark Time In">
+                                    <CheckBox fx:id="checkTimein" layoutX="683.0" layoutY="29.0" mnemonicParsing="false" onAction="#markTimeIn" text="Mark Time In">
                                        <font>
-                                          <Font name="Arial Bold" size="16.0" />
+                                          <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </CheckBox>
-                                    <CheckBox layoutX="90.0" layoutY="272.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Mark Time Out">
+                                    <CheckBox fx:id="checkTimeout" layoutX="683.0" layoutY="149.0" mnemonicParsing="false" onAction="#markTimeOut" text="Mark Time Out">
                                        <font>
-                                          <Font name="Arial Bold" size="16.0" />
+                                          <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </CheckBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="456.0" layoutY="10.0" prefHeight="583.0" prefWidth="380.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #f7f7f7;">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <children>
-                                    <Label layoutX="103.0" layoutY="38.0" text="Attendance History">
+                                    <Label fx:id="lblStaffName" layoutX="231.0" layoutY="97.0" text="Staff Name">
                                        <font>
-                                          <Font name="Tahoma Bold" size="18.0" />
+                                          <Font name="Arial Bold" size="18.0" />
                                        </font>
                                     </Label>
+                                    <Label fx:id="lblStaffPosition" layoutX="231.0" layoutY="148.0" text="Staff Position">
+                                       <font>
+                                          <Font name="Arial Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblStaffid" layoutX="231.0" layoutY="38.0" text="Staff ID">
+                                       <font>
+                                          <Font name="Arial Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children></AnchorPane>
+                              <AnchorPane fx:id="myDetailsView" layoutX="14.0" layoutY="259.0" prefHeight="335.0" prefWidth="825.0" style="-fx-background-radius: 8px; -fx-border-width: 2px; -fx-border-color: #aaa; -fx-border-radius: 8px;" visible="false">
+                                 <children>
+                                    <Label layoutX="378.0" layoutY="14.0" text="My Details">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="118.0" layoutY="73.0" text="ID" />
+                                    <Label layoutX="248.0" layoutY="73.0" text="First Name" />
+                                    <Label layoutX="448.0" layoutY="73.0" text="Last Name" />
+                                    <Label layoutX="619.0" layoutY="73.0" text="Gender" />
+                                    <Label layoutX="448.0" layoutY="170.0" text="Department" />
+                                    <Label layoutX="248.0" layoutY="170.0" text="Email" />
+                                    <Label layoutX="448.0" layoutY="260.0" text="Date of Joining" />
+                                    <Label layoutX="619.0" layoutY="170.0" text="Position" />
+                                    <Label layoutX="248.0" layoutY="260.0" text="Salary" />
+                                    <Line endX="33.0" layoutX="144.0" layoutY="113.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsID" layoutX="118.0" layoutY="96.0" text="ID">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="276.0" layoutY="112.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsFname" layoutX="250.0" layoutY="95.0" text="First Name">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="276.0" layoutY="301.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsSalary" layoutX="250.0" layoutY="284.0" text="Salary">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="644.0" layoutY="209.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsPos" layoutX="618.0" layoutY="192.0" text="Position">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="474.0" layoutY="209.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsDept" layoutX="448.0" layoutY="192.0" text="Department">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="276.0" layoutY="210.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsEmail" layoutX="250.0" layoutY="193.0" text="Email">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="645.0" layoutY="111.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsGender" layoutX="619.0" layoutY="94.0" text="Gender">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="474.0" layoutY="112.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsLname" layoutX="448.0" layoutY="95.0" text="Last Name">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Line endX="120.0" layoutX="474.0" layoutY="300.0" startX="-25.0" />
+                                    <Label fx:id="lblDetailsDoJ" layoutX="448.0" layoutY="283.0" text="Date of Joining">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Polyline fill="TRANSPARENT" points="307.0, -13.0, 318.0, 0.0, 298.0, 0.0, 307.0, -13.0" stroke="#aaaaaa" strokeType="INSIDE">
+                                       <effect>
+                                          <InnerShadow />
+                                       </effect>
+                                    </Polyline>
                                  </children>
                               </AnchorPane>
+                              <AnchorPane fx:id="passwordChangeView" layoutX="15.0" layoutY="259.0" prefHeight="335.0" prefWidth="825.0" style="-fx-background-radius: 8px; -fx-border-width: 2px; -fx-border-color: #aaa; -fx-border-radius: 8px;">
+                                 <children>
+                                    <Label layoutX="286.0" layoutY="35.0" text="Change Password and Username">
+                                       <font>
+                                          <Font name="Arial Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="txtNewUsername" layoutX="376.0" layoutY="95.0" prefHeight="35.0" prefWidth="200.0" />
+                                    <TextField fx:id="txtNewPassword" layoutX="376.0" layoutY="144.0" prefHeight="35.0" prefWidth="200.0" />
+                                    <TextField fx:id="txtConfirmPassword" layoutX="376.0" layoutY="199.0" prefHeight="35.0" prefWidth="200.0" />
+                                    <Label layoutX="268.0" layoutY="104.0" text="New Username:" />
+                                    <Label layoutX="268.0" layoutY="153.0" text="New Password:" />
+                                    <Label layoutX="249.0" layoutY="208.0" text="Confirm Password:" />
+                                    <Button fx:id="changeBtn" layoutX="376.0" layoutY="266.0" mnemonicParsing="false" onAction="#changeUserPassword" prefHeight="40.0" prefWidth="200.0" text="Change">
+                                       <font>
+                                          <Font name="Arial Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Polyline fill="TRANSPARENT" layoutX="415.0" layoutY="62.0" points="14.0, -62.0, 35.0, -62.0, 24.5, -75.0, 14.0, -62.0" stroke="#aaaaaa" strokeType="INSIDE">
+                                       <effect>
+                                          <InnerShadow />
+                                       </effect>
+                                    </Polyline>
+                                 </children>
+                              </AnchorPane>
+                              <Button fx:id="detailsBtn" layoutX="288.0" layoutY="223.0" mnemonicParsing="false" onAction="#changeView" style="-fx-background-color: transparent;" text="My Details" textFill="#0d0461">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="changePasswordBtn" layoutX="394.0" layoutY="223.0" mnemonicParsing="false" onAction="#changeView" style="-fx-background-color: transparent;" text="Change Password" textFill="#0d0461">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="RequestleaveView" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="850.0" visible="false">

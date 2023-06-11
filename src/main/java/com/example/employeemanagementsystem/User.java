@@ -121,8 +121,7 @@ public class User {
                 alert.showAndWait();
             } else {
 
-                String check = "SELECT username FROM users WHERE staffID = " + txtUserid.getText()
-                        + " or username = '" + txtUsername.getText() + "'";
+                String check = "SELECT username FROM users WHERE staffID = " + txtUserid.getText();
 
                 statement = connect.createStatement();
                 result = statement.executeQuery(check);
@@ -131,7 +130,7 @@ public class User {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Username or userid already exists.");
+                    alert.setContentText("Userid already exists.");
                     alert.showAndWait();
                 } else {
 
@@ -221,23 +220,72 @@ public class User {
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
             } else {
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to UPDATE user: " + txtUsername.getText() + "?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(sql);
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Successfully Updated!");
-                    alert.showAndWait();
-                }
+                    alert.setContentText("Are you sure you want to UPDATE user: " + txtUsername.getText() + "?");
+                    Optional<ButtonType> option = alert.showAndWait();
 
+                    if (option.get().equals(ButtonType.OK)) {
+                        statement = connect.createStatement();
+                        statement.executeUpdate(sql);
+
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successfully Updated!");
+                        alert.showAndWait();
+                    }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePassword(TextField txtNewUsername, TextField txtNewPassword, TextField txtConfirmPassword) {
+        String sql = "UPDATE users SET username = '"
+                + txtNewUsername.getText() + "', password = '"
+                + txtNewPassword.getText() + "' WHERE staffID = "
+                + getData.id;
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtNewUsername.getText().isEmpty()
+                    ||txtNewPassword.getText().isEmpty()
+                    || txtConfirmPassword.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else if (!(txtNewPassword.getText()).equals(txtConfirmPassword.getText())) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("password mismatch!");
+                alert.showAndWait();
+            } else {
+
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to change your password and username?");
+                    Optional<ButtonType> option = alert.showAndWait();
+
+                    if (option.get().equals(ButtonType.OK)) {
+                        statement = connect.createStatement();
+                        statement.executeUpdate(sql);
+
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successfully changed!");
+                        alert.showAndWait();
+                    }
             }
 
         } catch (Exception e) {
