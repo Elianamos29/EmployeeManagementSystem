@@ -82,12 +82,15 @@ public class Attendance {
             } else {
 
                 Employee emp = getDetails(getData.id);
+                String status = "active";
+                if (!getData.isActive)
+                    status = "inactive";
 
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, String.valueOf(sqlDate));
                 prepare.setInt(2, getData.id);
                 prepare.setString(3,emp.getFname() + " " + emp.getLname());
-                prepare.setString(4, "active");
+                prepare.setString(4, status);
                 prepare.setString(5, String.valueOf(sqlTime));
 
                 prepare.executeUpdate();

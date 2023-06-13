@@ -167,6 +167,7 @@ public class StaffDashboardController implements Initializable {
 
         User.showUserName(lblStaff);
         showEmployeeDetails();
+        setEmployeeStatus();
 
     }
 
@@ -221,6 +222,7 @@ public class StaffDashboardController implements Initializable {
             passwordChangeView.setVisible(false);
 
             showEmployeeDetails();
+            setEmployeeStatus();
 
         } else if (event.getSource() == requestleaveBtn) {
             staffdashboardView.setVisible(false);
@@ -382,8 +384,14 @@ public class StaffDashboardController implements Initializable {
         attendance.timeOut(checkTimeout);
     }
 
+    public void setEmployeeStatus() {
+        Leave leave = new Leave();
+
+        leave.setEmployeeStatus();
+    }
+
     public void logout() {
-        getData.hasPendingRequest = false;
+
         Stage dashboardStage = (Stage) logoutBtn.getScene().getWindow();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Message");
@@ -393,6 +401,9 @@ public class StaffDashboardController implements Initializable {
 
         try{
             if (option.get().equals(ButtonType.OK)) {
+                getData.hasPendingRequest = false;
+                getData.isActive = true;
+
                 dashboardStage.close();
                 FXMLLoader fxmlLoader = new FXMLLoader(EMS.class.getResource("EMS-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());

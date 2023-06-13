@@ -307,6 +307,15 @@ public class DashboardController implements Initializable {
     @FXML
     private Label lblAtStatus;
 
+    @FXML
+    private Label lblTotalEmployees;
+    @FXML
+    private Label lblTotalPrsent;
+    @FXML
+    private Label lblTotalInactive;
+    @FXML
+    private Label lblNewRequests;
+
 
 
 
@@ -322,7 +331,11 @@ public class DashboardController implements Initializable {
         usermgmtView.setVisible(false);
         leavemgmtView.setVisible(false);
         attendanceView.setVisible(false);
+
         User.showUserName(lblAdmin);
+        totalEmployeesShow();
+        totalPresentShow();
+        pendingLeaveRequestsShow();
 
     }
 
@@ -334,6 +347,10 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
+
+            totalEmployeesShow();
+            totalPresentShow();
+            pendingLeaveRequestsShow();
         } else if (event.getSource() == home_staffmgmtBtn) {
             dashboardView.setVisible(false);
             staffmgmtView.setVisible(true);
@@ -373,6 +390,73 @@ public class DashboardController implements Initializable {
             showAttendanceList();
         }
     }
+
+    public void totalEmployeesShow() {
+        String sql = "SELECT COUNT(id) FROM employee";
+
+        connect = database.connectDb();
+        int countData = 0;
+        try {
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                countData = result.getInt("COUNT(id)");
+            }
+
+            lblTotalEmployees.setText(String.valueOf(countData));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void totalPresentShow() {
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String sql = "SELECT COUNT(*) FROM attendance WHERE date = '" + sqlDate + "'";
+
+        connect = database.connectDb();
+        int countData = 0;
+        try {
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                countData = result.getInt("COUNT(*)");
+            }
+
+            lblTotalPrsent.setText(String.valueOf(countData));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pendingLeaveRequestsShow() {
+        String sql = "SELECT COUNT(requestID) FROM leaverequest WHERE status = 'pending'";
+
+        connect = database.connectDb();
+        int countData = 0;
+        try {
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                countData = result.getInt("COUNT(requestID)");
+            }
+
+            lblNewRequests.setText(String.valueOf(countData));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void addEmployee() {
         Date date = new Date();

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -233,8 +234,10 @@ public class Leave {
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
-                    if (status.equals("approved"))
+                    if (status.equals("approved")) {
                         alert.setContentText("Successfully Approved!");
+                        setEmployeeStatus();
+                    }
                     else
                         alert.setContentText("Successfully rejected!");
                     alert.showAndWait();
@@ -242,5 +245,32 @@ public class Leave {
                 }
             }
         }catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void setEmployeeStatus() {
+        Leave leave;
+        String sql = "SELECT * FROM leaverequest WHERE staffID = " + getData.id + " and status = 'approved'";
+
+        connect = database.connectDb();
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+
+            if (result.next()) {
+                String from = result.getString("fromDate");
+                String to = result.getString("toDate");
+
+                Date date = new Date();
+                Date fromdate = new SimpleDateFormat("yy/MM/dd").parse(from.replace("-", "/"));
+                Date todate = new SimpleDateFormat("yy/MM/dd").parse(to.replace("-", "/"));
+
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                java.sql.Date sqlfdate = new java.sql.Date(fromdate.getTime());
+                java.sql.Date sqltdate = new java.sql.Date(todate.getTime());
+
+                if (sqlDate.compareTo(sqlfdate) >= 0 && sqlDate.compareTo(sqltdate) <= 0)
+                    getData.isActive = false;
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 }

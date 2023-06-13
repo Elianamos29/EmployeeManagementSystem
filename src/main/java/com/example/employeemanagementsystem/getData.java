@@ -5,4 +5,5 @@ public class getData {
     public static int id;
     public static String userType;
     public static boolean hasPendingRequest = false;
+    public static boolean isActive = true;
 }
