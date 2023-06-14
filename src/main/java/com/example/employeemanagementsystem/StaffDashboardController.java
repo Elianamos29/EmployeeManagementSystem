@@ -8,18 +8,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DateStringConverter;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 public class StaffDashboardController implements Initializable {
 
@@ -165,9 +164,8 @@ public class StaffDashboardController implements Initializable {
         myDetailsView.setVisible(true);
         passwordChangeView.setVisible(false);
 
-        User.showUserName(lblStaff);
+        lblStaff.setText(getData.username);
         showEmployeeDetails();
-        setEmployeeStatus();
 
     }
 
@@ -203,15 +201,97 @@ public class StaffDashboardController implements Initializable {
     }
 
     public void changeUserPassword() {
-        User user = new User();
+        String sql = "UPDATE users SET username = '"
+                + txtNewUsername.getText() + "', password = '"
+                + txtNewPassword.getText() + "' WHERE staffID = "
+                + getData.id;
 
-        user.changePassword(txtNewUsername, txtNewPassword, txtConfirmPassword);
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtNewUsername.getText().isEmpty()
+                    ||txtNewPassword.getText().isEmpty()
+                    || txtConfirmPassword.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else if (!(txtNewPassword.getText()).equals(txtConfirmPassword.getText())) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("password mismatch!");
+                alert.showAndWait();
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to change your password and username?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully changed!");
+                    alert.showAndWait();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void showRequestHistory() {
-        Leave leave = new Leave();
+    public ObservableList<Leave> requestListData() {
+        ObservableList<Leave> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM leaverequest WHERE staffID = " + getData.id;
 
-        leave.showRequestHistory(tblRequestHistory, colHistoryRequestid, colHistoryLeavetype, colHistoryFrom, colHistoryTo, colHistoryDescription, colHistoryStatus, colHistoryComment);
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Leave leave;
+
+            while (result.next()) {
+                leave = new Leave(result.getInt("requestID"),
+                        result.getInt("staffID"),
+                        result.getString("leaveType"),
+                        result.getString("description"),
+                        result.getDate("fromDate"),
+                        result.getDate("toDate"),
+                        result.getString("status"),
+                        result.getString("comment"));
+                listData.add(leave);
+
+                if (result.getString("status").equals("pending"))
+                    getData.hasPendingRequest = true;
+            }
+        } catch (Exception e) {e.printStackTrace();}
+        return listData;
+    }
+    private static ObservableList<Leave> requestList;
+
+    public void showRequestHistory() {
+        requestList = requestListData();
+
+        colHistoryRequestid.setCellValueFactory(new PropertyValueFactory<>("requestID"));
+        colHistoryLeavetype.setCellValueFactory(new PropertyValueFactory<>("leaveType"));
+        colHistoryFrom.setCellValueFactory(new PropertyValueFactory<>("fromDate"));
+        colHistoryTo.setCellValueFactory(new PropertyValueFactory<>("toDate"));
+        colHistoryDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colHistoryStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colHistoryComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        tblRequestHistory.setItems(requestList);
     }
 
     public void switchView(ActionEvent event) {
@@ -222,7 +302,6 @@ public class StaffDashboardController implements Initializable {
             passwordChangeView.setVisible(false);
 
             showEmployeeDetails();
-            setEmployeeStatus();
 
         } else if (event.getSource() == requestleaveBtn) {
             staffdashboardView.setVisible(false);
@@ -373,21 +452,94 @@ public class StaffDashboardController implements Initializable {
     }
 
     public void markTimeIn() {
-        Attendance attendance = new Attendance();
+        Date date = new Date();
+        java.sql.Time sqlTime = new Time(date.getTime());
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String sql = "INSERT INTO attendance (date,staffID,name,status,timeIn) VALUES(?,?,?,?,?)";
 
-        attendance.timeIn(checkTimein);
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            String check = "SELECT staffID FROM attendance WHERE staffID = "
+                    + getData.id + " and date = '" + sqlDate + "'";
+
+            statement = connect.createStatement();
+            result = statement.executeQuery(check);
+
+            if (result.next()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("You have already marked your time in.");
+                alert.showAndWait();
+            } else {
+
+                Employee emp = (new Employee()).getEmployeeDetails(getData.id);
+                String status = "active";
+                if (!getData.isActive)
+                    status = "inactive";
+
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, String.valueOf(sqlDate));
+                prepare.setInt(2, getData.id);
+                prepare.setString(3,emp.getFname() + " " + emp.getLname());
+                prepare.setString(4, status);
+                prepare.setString(5, String.valueOf(sqlTime));
+
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully Marked In!");
+                alert.showAndWait();
+
+                checkTimein.setDisable(true);
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     public void markTimeOut() {
-        Attendance attendance = new Attendance();
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Time sqlTime = new java.sql.Time(date.getTime());
+        String sql = "UPDATE attendance SET timeOut = '" + sqlTime + "' WHERE date = '" + sqlDate + "' and staffID = " + getData.id;
 
-        attendance.timeOut(checkTimeout);
-    }
+        connect = database.connectDb();
+        try {
+            Alert alert;
+            String check = "SELECT * FROM attendance WHERE date = '" + sqlDate + "' and staffID = " + getData.id;
+            statement = connect.createStatement();
+            result = statement.executeQuery(check);
 
-    public void setEmployeeStatus() {
-        Leave leave = new Leave();
+            if (result.next()) {
+                if (result.getTime("timeOut") == null) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
 
-        leave.setEmployeeStatus();
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Marked Out!");
+                    alert.showAndWait();
+
+                    checkTimeout.setDisable(true);
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("You have already marked time out.");
+                    alert.showAndWait();
+                }
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("You haven't marked time in.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     public void logout() {

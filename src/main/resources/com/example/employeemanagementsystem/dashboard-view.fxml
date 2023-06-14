@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.employeemanagementsystem.DashboardController">
@@ -27,7 +28,92 @@
                <top>
                   <AnchorPane prefHeight="50.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane prefHeight="50.0" prefWidth="1111.0" style="-fx-background-color: cyan;" />
+                        <AnchorPane prefHeight="50.0" prefWidth="1111.0" style="-fx-background-color: cyan;">
+                           <children>
+                              <ImageView fitHeight="33.0" fitWidth="42.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@user-green.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="55.0" layoutY="20.0" prefHeight="17.0" prefWidth="198.0" text="Employee Management System" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="13.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                 </effect>
+                              </Label>
+                              <Button layoutX="1060.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="x">
+                                 <font>
+                                    <Font name="Tahoma" size="14.0" />
+                                 </font>
+                              </Button>
+                              <AnchorPane fx:id="navDashboard" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0" visible="false">
+                                 <children>
+                                    <Label layoutX="20.0" layoutY="3.0" prefHeight="17.0" prefWidth="76.0" text="Dashboard" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                       </effect>
+                                    </Label>
+                                    <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="navStaffManagement" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0" visible="false">
+                                 <children>
+                                    <Label layoutX="20.0" layoutY="3.0" prefHeight="17.0" prefWidth="131.0" text="Staff Management" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                       </effect>
+                                    </Label>
+                                    <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="navLeaveManagement" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0" visible="false">
+                                 <children>
+                                    <Label layoutX="20.0" layoutY="3.0" prefHeight="17.0" prefWidth="131.0" text="Leave Management" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                       </effect>
+                                    </Label>
+                                    <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="navUserManagement" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0" visible="false">
+                                 <children>
+                                    <Label layoutX="20.0" layoutY="3.0" prefHeight="17.0" prefWidth="131.0" text="User Management" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                       </effect>
+                                    </Label>
+                                    <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="navStaffAttendance" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0" visible="false">
+                                 <children>
+                                    <Label layoutX="20.0" layoutY="3.0" prefHeight="17.0" prefWidth="140.0" text="Staff Attendance" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
+                                       </effect>
+                                    </Label>
+                                    <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
+                                 </children>
+                              </AnchorPane>
+                           </children></AnchorPane>
                      </children>
                   </AnchorPane>
                </top>
@@ -151,7 +237,7 @@
                <center>
                   <AnchorPane prefHeight="363.0" prefWidth="510.0" style="-fx-border-radius: 10;" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="dashboardView" layoutX="7.0" layoutY="7.0" prefHeight="590.0" prefWidth="838.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 0; -fx-background-radius: 10px;">
+                        <AnchorPane fx:id="dashboardView" layoutX="7.0" layoutY="7.0" prefHeight="590.0" prefWidth="838.0" style="-fx-border-color: #000; -fx-border-radius: 10px; -fx-border-width: 0; -fx-background-radius: 10px;" visible="false">
                            <children>
                               <AnchorPane layoutX="8.0" layoutY="7.0" prefHeight="567.0" prefWidth="824.0" style="-fx-background-color: #fff; -fx-border-radius: 10px; -fx-border-color: #aaa; -fx-border-width: 2px; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="7.0">
                                  <children>
@@ -377,7 +463,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;" visible="false">
+                        <AnchorPane fx:id="leavemgmtView" layoutX="10.0" layoutY="14.0" prefHeight="587.0" prefWidth="832.0" style=": ;">
                            <children>
                               <AnchorPane layoutX="469.0" layoutY="-7.0" prefHeight="582.0" prefWidth="362.0" style="-fx-border-color: #aaa; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <children>

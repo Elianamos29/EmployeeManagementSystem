@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DashboardController implements Initializable {
@@ -316,6 +317,22 @@ public class DashboardController implements Initializable {
     @FXML
     private Label lblNewRequests;
 
+    @FXML
+    private AnchorPane navDashboard;
+
+    @FXML
+    private AnchorPane navLeaveManagement;
+
+    @FXML
+    private AnchorPane navStaffAttendance;
+
+    @FXML
+    private AnchorPane navStaffManagement;
+
+    @FXML
+    private AnchorPane navUserManagement;
+
+
 
 
 
@@ -332,7 +349,13 @@ public class DashboardController implements Initializable {
         leavemgmtView.setVisible(false);
         attendanceView.setVisible(false);
 
-        User.showUserName(lblAdmin);
+        navDashboard.setVisible(true);
+        navLeaveManagement.setVisible(false);
+        navStaffAttendance.setVisible(false);
+        navStaffManagement.setVisible(false);
+        navUserManagement.setVisible(false);
+
+        lblAdmin.setText(getData.username);
         totalEmployeesShow();
         totalPresentShow();
         pendingLeaveRequestsShow();
@@ -348,6 +371,12 @@ public class DashboardController implements Initializable {
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
 
+            navDashboard.setVisible(true);
+            navLeaveManagement.setVisible(false);
+            navStaffAttendance.setVisible(false);
+            navStaffManagement.setVisible(false);
+            navUserManagement.setVisible(false);
+
             totalEmployeesShow();
             totalPresentShow();
             pendingLeaveRequestsShow();
@@ -358,6 +387,12 @@ public class DashboardController implements Initializable {
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
 
+            navDashboard.setVisible(false);
+            navLeaveManagement.setVisible(false);
+            navStaffAttendance.setVisible(false);
+            navStaffManagement.setVisible(true);
+            navUserManagement.setVisible(false);
+
             showEmployeeListData();
             addEmployeeGenderList();
         } else if (event.getSource() == home_usermgmtBtn) {
@@ -367,6 +402,12 @@ public class DashboardController implements Initializable {
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(false);
 
+            navDashboard.setVisible(false);
+            navLeaveManagement.setVisible(false);
+            navStaffAttendance.setVisible(false);
+            navStaffManagement.setVisible(false);
+            navUserManagement.setVisible(true);
+
             showUserListData();
         } else if (event.getSource() == home_leavemgmtBtn) {
             dashboardView.setVisible(false);
@@ -374,6 +415,12 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(true);
             attendanceView.setVisible(false);
+
+            navDashboard.setVisible(false);
+            navLeaveManagement.setVisible(true);
+            navStaffAttendance.setVisible(false);
+            navStaffManagement.setVisible(false);
+            navUserManagement.setVisible(false);
 
             viewPending.setVisible(true);
             viewApproved.setVisible(false);
@@ -385,6 +432,12 @@ public class DashboardController implements Initializable {
             usermgmtView.setVisible(false);
             leavemgmtView.setVisible(false);
             attendanceView.setVisible(true);
+
+            navDashboard.setVisible(false);
+            navLeaveManagement.setVisible(false);
+            navStaffAttendance.setVisible(true);
+            navStaffManagement.setVisible(false);
+            navUserManagement.setVisible(false);
 
             setChooseDateList();
             showAttendanceList();
@@ -743,100 +796,6 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void showUserListData() {
-        User user = new User();
-
-        user.showUserListData(tblPassword, colUsername, colUseremail, colPassword, colUsertype);
-    }
-
-    public void showPendingLeaveList() {
-        Leave leave = new Leave();
-
-        leave.showLeaveListData("pending",tblPending, colPenRequestid, colPenStaffid, colPenLeavetype, colPenFrom, colPenTo);
-    }
-
-    public void showApprovedLeaveList() {
-        Leave leave = new Leave();
-
-        leave.showLeaveListData("approved",tblApproved, colAprRequestid, colAprStaffid, colAprLeavetype, colAprFrom, colAprTo);
-    }
-
-    public void showRejectedLeaveList() {
-        Leave leave = new Leave();
-
-        leave.showLeaveListData("rejected",tblNotapproved, colNaprRequestid, colNaprStaffid, colNaprLeavetype, colNaprFrom, colNaprTo);
-    }
-
-    public void addUser() {
-        User user = new User();
-
-        user.addUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
-        showUserListData();
-        resetUserText();
-    }
-
-    public void deleteUser() {
-        User user = new User();
-
-        user.deleteUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
-        showUserListData();
-        resetUserText();
-    }
-
-    public void updateUser() {
-        User user = new User();
-
-        user.updateUser(txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
-        showUserListData();
-        resetUserText();
-    }
-
-    public void selectUser() {
-        User user = new User();
-
-        user.userSelect(tblPassword, txtUserid, txtUsername, txtUseremail, txtPassword, txtUsertype);
-    }
-
-    public void selectPendingLeave() {
-        Leave leave = new Leave();
-
-        leave.leaveSelect(tblPending, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
-    }
-
-    public void selectApprovedLeave() {
-        Leave leave = new Leave();
-
-        leave.leaveSelect(tblApproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
-    }
-
-    public void selectRejectedLeave() {
-        Leave leave = new Leave();
-
-        leave.leaveSelect(tblNotapproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
-    }
-
-    public void approveLeaveRequest() {
-        Leave leave = new Leave();
-
-        leave.updateLeave("approved", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
-        showPendingLeaveList();
-        resetLeaveDetails();
-    }
-
-    public void rejectLeaveRequest() {
-        Leave leave = new Leave();
-
-        leave.updateLeave("rejected", lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription, txtLeaveComment);
-        showPendingLeaveList();
-        resetLeaveDetails();
-    }
-
-    public void searchUser() {
-        User user = new User();
-
-        user.searchUser(txtsearchUser, tblPassword);
-    }
-
     private String[] listGender = {"Male", "Female"};
 
     public void addEmployeeGenderList() {
@@ -850,18 +809,537 @@ public class DashboardController implements Initializable {
         combGender.setItems(listData);
     }
 
-    public void showAttendanceList() throws ParseException {
-        Attendance attendance = new Attendance();
+    public ObservableList<Leave> leaveListData(String status) {
 
-        attendance.showAttendanceList(combChooseDate, tblAttendance, colAttendanceStaffid, colAttendanceName, colAttendanceStatus, colAttendanceTimein, colAttendanceTimeout);
+        ObservableList<Leave> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM leaverequest WHERE status = '" + status + "'";
+
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+            Leave leave;
+
+            while (result.next()) {
+                leave = new Leave(result.getInt("requestID"),
+                        result.getInt("staffID"),
+                        result.getString("leaveType"),
+                        result.getString("description"),
+                        result.getDate("fromDate"),
+                        result.getDate("toDate"),
+                        result.getString("status"),
+                        result.getString("comment"));
+                listData.add(leave);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+    private static ObservableList<Leave> leaveList;
+
+
+    public void showLeaveListData(String status, TableView<Leave> tblView, TableColumn<Leave, Integer> colRequestid, TableColumn<Leave, Integer> colStaffid, TableColumn<Leave, String> colLeavetype, TableColumn<Leave, Date> colFrom, TableColumn<Leave, Date> colTo) {
+        leaveList = leaveListData(status);
+
+        colRequestid.setCellValueFactory(new PropertyValueFactory<>("requestID"));
+        colStaffid.setCellValueFactory(new PropertyValueFactory<>("staffID"));
+        colLeavetype.setCellValueFactory(new PropertyValueFactory<>("leaveType"));
+        colFrom.setCellValueFactory(new PropertyValueFactory<>("fromDate"));
+        colTo.setCellValueFactory(new PropertyValueFactory<>("toDate"));
+
+        tblView.setItems(leaveList);
+
+    }
+
+    public void showPendingLeaveList() {
+        showLeaveListData("pending",tblPending, colPenRequestid, colPenStaffid, colPenLeavetype, colPenFrom, colPenTo);
+    }
+
+    public void showApprovedLeaveList() {
+        showLeaveListData("approved",tblApproved, colAprRequestid, colAprStaffid, colAprLeavetype, colAprFrom, colAprTo);
+    }
+
+    public void showRejectedLeaveList() {
+        showLeaveListData("rejected",tblNotapproved, colNaprRequestid, colNaprStaffid, colNaprLeavetype, colNaprFrom, colNaprTo);
+    }
+
+    public void leaveSelect(TableView<Leave> tableView, Label lblRequestid, Label lblStaffid, Label lblStaffname, Label lblLeavetype, Label lblFrom, Label lblTo, TextArea txtDescription) {
+        Leave leaveSelected = tableView.getSelectionModel().getSelectedItem();
+        int num = tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        connect = database.connectDb();
+        String staffName = "";
+
+        String sql = "SELECT * FROM employee WHERE id = " + leaveSelected.getStaffID();
+
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+
+            if (result.next()) {
+                staffName = result.getString("firstName") + " " + result.getString("lastName");
+            }
+
+        } catch (Exception e) {e.printStackTrace();}
+
+        lblRequestid.setText(String.valueOf(leaveSelected.getRequestID()));
+        lblStaffid.setText(String.valueOf(leaveSelected.getStaffID()));
+        lblStaffname.setText(staffName);
+        lblLeavetype.setText(leaveSelected.getLeaveType());
+        lblFrom.setText(String.valueOf(leaveSelected.getFromDate()));
+        lblTo.setText(String.valueOf(leaveSelected.getToDate()));
+        txtDescription.setText(leaveSelected.getDescription());
+    }
+
+    public void selectPendingLeave() {
+        leaveSelect(tblPending, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void selectApprovedLeave() {
+        leaveSelect(tblApproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void selectRejectedLeave() {
+        leaveSelect(tblNotapproved, lblLeaveRequestid, lblLeaveStaffid, lblLeaveStaffname, lblLeaveType, lblLeaveFrom, lblLeaveTo, txtLeaveDescription);
+    }
+
+    public void updateLeave(String status) {
+        String sql = "UPDATE leaverequest SET status = '" + status + "', comment = '" + txtLeaveComment.getText() + "' WHERE requestID = " + lblLeaveRequestid.getText();
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (lblLeaveRequestid.getText().isEmpty()
+                    || lblLeaveStaffid.getText().isEmpty()
+                    || lblLeaveType.getText().isEmpty()
+                    || lblLeaveStaffname.getText().isEmpty()
+                    || lblLeaveFrom.getText().isEmpty()
+                    || lblLeaveTo.getText().isEmpty()
+                    || txtLeaveDescription.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a request");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                if (status.equals("approved"))
+                    alert.setContentText("Are you sure you want to approve this request?");
+                else
+                    alert.setContentText("Are you sure you want to reject this request?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    if (status.equals("approved")) {
+                        alert.setContentText("Successfully Approved!");
+                        setEmployeeStatus();
+                    } else
+                        alert.setContentText("Successfully rejected!");
+                    alert.showAndWait();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setEmployeeStatus() {
+        Leave leave;
+        String sql = "SELECT * FROM leaverequest WHERE staffID = " + getData.id + " and status = 'approved'";
+
+        connect = database.connectDb();
+        try {
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+
+            if (result.next()) {
+                String from = result.getString("fromDate");
+                String to = result.getString("toDate");
+
+                Date date = new Date();
+                Date fromdate = new SimpleDateFormat("yy/MM/dd").parse(from.replace("-", "/"));
+                Date todate = new SimpleDateFormat("yy/MM/dd").parse(to.replace("-", "/"));
+
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                java.sql.Date sqlfdate = new java.sql.Date(fromdate.getTime());
+                java.sql.Date sqltdate = new java.sql.Date(todate.getTime());
+
+                if (sqlDate.compareTo(sqlfdate) >= 0 && sqlDate.compareTo(sqltdate) <= 0)
+                    getData.isActive = false;
+            }
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void approveLeaveRequest() {
+        updateLeave("approved");
+        showPendingLeaveList();
+        resetLeaveDetails();
+    }
+
+    public void rejectLeaveRequest() {
+        updateLeave("rejected");
+        showPendingLeaveList();
+        resetLeaveDetails();
+    }
+
+    public ObservableList<User> userListData() {
+
+        ObservableList<User> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM users";
+
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+            User user;
+
+            while (result.next()) {
+                user = new User(result.getInt("staffID"),
+                        result.getString("username"),
+                        result.getString("email"),
+                        result.getString("password"),
+                        result.getString("userType"));
+                listData.add(user);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private static ObservableList<User> userList;
+
+
+    public void showUserListData() {
+        userList = userListData();
+
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colUseremail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        colUsertype.setCellValueFactory(new PropertyValueFactory<>("userType"));
+
+        tblPassword.setItems(userList);
+
+    }
+
+    public void addUser() {
+        String sql = "INSERT INTO users (staffID, username, email, password, userType) VALUES(?,?,?,?,?)";
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtUserid.getText().isEmpty()
+                    || txtUsername.getText().isEmpty()
+                    || txtUseremail.getText().isEmpty()
+                    || txtPassword.getText().isEmpty()
+                    || txtUsertype.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+
+                String check = "SELECT username FROM users WHERE staffID = " + txtUserid.getText();
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(check);
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Userid already exists.");
+                    alert.showAndWait();
+                } else {
+
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, txtUserid.getText());
+                    prepare.setString(2, txtUsername.getText());
+                    prepare.setString(3, txtUseremail.getText());
+                    prepare.setString(4, txtPassword.getText());
+                    prepare.setString(5, txtUsertype.getText());
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added!");
+                    alert.showAndWait();
+
+                    showUserListData();
+                    resetUserText();
+                }
+            }
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void deleteUser() {
+        String sql = "DELETE FROM users where staffID = " +
+                txtUserid.getText();
+        connect = database.connectDb();
+
+        try {
+
+            Alert alert;
+            if (txtUserid.getText().isEmpty()
+                    ||txtUsername.getText().isEmpty()
+                    || txtUseremail.getText().isEmpty()
+                    || txtPassword.getText().isEmpty()
+                    || txtUsertype.getText().isEmpty() ) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE User: " + txtUsername.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+                    showUserListData();
+                    resetUserText();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUser() {
+        String sql = "UPDATE users SET username = '"
+                + txtUsername.getText() + "', email = '"
+                + txtUseremail.getText() + "', password = '"
+                + txtPassword.getText() + "', userType = '"
+                + txtUsertype.getText() + "' WHERE staffID = "
+                + txtUserid.getText();
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (txtUserid.getText().isEmpty()
+                    ||txtUsername.getText().isEmpty()
+                    || txtUseremail.getText().isEmpty()
+                    || txtPassword.getText().isEmpty()
+                    || txtUsertype.getText().isEmpty() ) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE user: " + txtUsername.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(sql);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+                    showUserListData();
+                    resetUserText();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectUser() {
+        User userSelected = tblPassword.getSelectionModel().getSelectedItem();
+        int num = tblPassword.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        txtUserid.setText(String.valueOf(userSelected.getUserid()));
+        txtUsername.setText(userSelected.getUsername());
+        txtUseremail.setText(userSelected.getEmail());
+        txtPassword.setText(userSelected.getPassword());
+        txtUsertype.setText(userSelected.getUserType());
+    }
+
+    public void searchUser() {
+        FilteredList<User> filter = new FilteredList<>(userList, e -> true);
+
+        txtsearchUser.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateUserData -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (String.valueOf(predicateUserData.getUserid()).contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getUsername().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getEmail().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getPassword().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateUserData.getUserType().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<User> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(tblPassword.comparatorProperty());
+        tblPassword.setItems(sortList);
+    }
+
+    public ObservableList<Attendance> attendancesListData() throws ParseException {
+        ObservableList<Attendance> listData = FXCollections.observableArrayList();
+        String date1 = (String) combChooseDate.getSelectionModel().getSelectedItem();
+        Date dateSet;
+
+        if (date1 == null) {
+            dateSet = new Date();
+        } else {
+            dateSet = new SimpleDateFormat("yy/MM/dd").parse(date1.replace("-", "/"));
+        }
+
+        java.sql.Date sqlDate = new java.sql.Date(dateSet.getTime());
+
+        String sql = "SELECT * FROM attendance WHERE date = '" + sqlDate + "'";
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Attendance attendance;
+
+            while (result.next()) {
+                attendance = new Attendance(result.getDate("date"),
+                        result.getInt("staffID"),
+                        result.getString("name"),
+                        result.getString("status"),
+                        result.getTime("timeIn"),
+                        result.getTime("timeOut"));
+                listData.add(attendance);
+            }
+        } catch (Exception e) {e.printStackTrace();}
+
+        return listData;
+    }
+
+    private static ObservableList<Attendance> attendanceList;
+
+    public void showAttendanceList() throws ParseException {
+        attendanceList = attendancesListData();
+
+        colAttendanceStaffid.setCellValueFactory(new PropertyValueFactory<>("staffID"));
+        colAttendanceName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAttendanceStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colAttendanceTimein.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
+        colAttendanceTimeout.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+
+        tblAttendance.setItems(attendanceList);
     }
 
     public void selectAttendance() {
-        Attendance attendance = new Attendance();
+        Attendance attendanceSelected = tblAttendance.getSelectionModel().getSelectedItem();
+        int num = tblAttendance.getSelectionModel().getSelectedIndex();
 
-        attendance.attendanceSelect(tblAttendance, lblAtID, lblAtName, lblAtGender, lblAtEmail, lblAtDepartment, lblAtPosition, lblAtSalary, lblAtStatus, lblAtDatejoin);
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        Employee emp = getDetails(attendanceSelected.getStaffID());
+
+        if (emp != null) {
+            lblAtID.setText(String.valueOf(emp.getId()));
+            lblAtName.setText(emp.getFname() + " " + emp.getLname());
+            lblAtGender.setText(emp.getGender());
+            lblAtEmail.setText(emp.getEmail());
+            lblAtDepartment.setText(emp.getDepartment());
+            lblAtPosition.setText(emp.getPosition());
+            lblAtSalary.setText(String.valueOf(emp.getSalary()));
+            lblAtStatus.setText(attendanceSelected.getStatus());
+            lblAtDatejoin.setText(String.valueOf(emp.getDateJoin()));
+        }
     }
 
+    private Employee getDetails(int staffID) {
+        String sql = "SELECT * FROM employee WHERE id = " + staffID;
+        connect = database.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Employee employee;
+            if (result.next()) {
+                return new Employee(result.getInt("id"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getString("department"),
+                        result.getString("email"),
+                        result.getString("position"),
+                        result.getDouble("salary"),
+                        result.getDate("dateJoining"));
+            }
+
+        } catch (Exception e) {e.printStackTrace();}
+
+        return null;
+    }
 
 
     public void resetText() {
