@@ -5,3 +5,15 @@
 .right_anch {
     -fx-background-color: linear-gradient(to right, #434343 0%, black 100%);
 }
+
+.close, .minimize {
+    -fx-background-color: transparent;
+}
+
+.close:hover {
+    -fx-background-color: #b50d0d
+}
+
+.minimize:hover {
+    -fx-background-color: #b50d0d
+}

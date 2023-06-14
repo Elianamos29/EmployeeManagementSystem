@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.converter.DateStringConverter;
 
 import java.net.URL;
@@ -149,6 +150,13 @@ public class StaffDashboardController implements Initializable {
     private TextField txtNewUsername;
     @FXML
     private Button detailsBtn;
+    @FXML
+    private AnchorPane navRequestLeave;
+
+    @FXML
+    private AnchorPane navStaffDashboard;
+    @FXML
+    private Button minimizeBtn;
 
 
 
@@ -163,6 +171,12 @@ public class StaffDashboardController implements Initializable {
         RequestleaveView.setVisible(false);
         myDetailsView.setVisible(true);
         passwordChangeView.setVisible(false);
+
+        navStaffDashboard.setVisible(true);
+        navRequestLeave.setVisible(false);
+
+        staffdashboardBtn.setStyle("-fx-background-color: #aaa;");
+        requestleaveBtn.setStyle("-fx-background-color: transparent;");
 
         lblStaff.setText(getData.username);
         showEmployeeDetails();
@@ -301,11 +315,23 @@ public class StaffDashboardController implements Initializable {
             myDetailsView.setVisible(true);
             passwordChangeView.setVisible(false);
 
+            navStaffDashboard.setVisible(true);
+            navRequestLeave.setVisible(false);
+
+            staffdashboardBtn.setStyle("-fx-background-color: #aaa;");
+            requestleaveBtn.setStyle("-fx-background-color: transparent;");
+
             showEmployeeDetails();
 
         } else if (event.getSource() == requestleaveBtn) {
             staffdashboardView.setVisible(false);
             RequestleaveView.setVisible(true);
+
+            navStaffDashboard.setVisible(false);
+            navRequestLeave.setVisible(true);
+
+            staffdashboardBtn.setStyle("-fx-background-color: transparent;");
+            requestleaveBtn.setStyle("-fx-background-color: #aaa;");
 
             setLeaveTypeList();
             setFromDateList();
@@ -560,9 +586,8 @@ public class StaffDashboardController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(EMS.class.getResource("EMS-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage loginStage = new Stage();
-                loginStage.setTitle("Employee Management System");
 
-                //stage.initStyle(StageStyle.TRANSPARENT);
+                loginStage.initStyle(StageStyle.TRANSPARENT);
                 loginStage.setResizable(false);
                 loginStage.setScene(scene);
                 loginStage.show();
@@ -576,5 +601,14 @@ public class StaffDashboardController implements Initializable {
         combFromdate.getSelectionModel().clearSelection();
         combTodate.getSelectionModel().clearSelection();
         txtDescription.setText("");
+    }
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) minimizeBtn.getScene().getWindow();
+        stage.setIconified(true);
     }
 }

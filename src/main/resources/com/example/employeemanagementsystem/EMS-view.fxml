@@ -14,14 +14,19 @@
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="800.0">
          <children>
-            <AnchorPane prefHeight="500.0" prefWidth="250.0" styleClass="left_anch" stylesheets="@LoginDesign.css">
+            <AnchorPane prefHeight="500.0" prefWidth="250.0" style="-fx-background-color: #fff;" styleClass="left_anch" stylesheets="@LoginDesign.css">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@users-w.png" />
+                        <Image url="@ems1.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="15.0" layoutY="211.0" text="Employee Management System" textFill="WHITE">
+                  <Label layoutX="15.0" layoutY="211.0" text="Employee Management System">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="72.0" layoutY="241.0" text="Login Page">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
@@ -40,6 +45,8 @@
                   <TextField fx:id="username" layoutX="161.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="username" />
                   <TextField fx:id="password" layoutX="161.0" layoutY="208.0" prefHeight="30.0" prefWidth="250.0" promptText="password" />
                   <Button fx:id="logbtn" layoutX="161.0" layoutY="291.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" text="Login" />
+                  <Button fx:id="closebtn" layoutX="511.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="39.0" styleClass="close" stylesheets="@LoginDesign.css" text="X" textFill="#f8f8f8" />
+                  <Button fx:id="minimizebtn" layoutX="472.0" mnemonicParsing="false" onAction="#minimize" prefHeight="25.0" prefWidth="39.0" styleClass="minimize" stylesheets="@LoginDesign.css" text="-" textFill="WHITE" />
                </children></AnchorPane>
          </children>
       </AnchorPane>

@@ -10,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.fxml.Initializable;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +29,9 @@ public class EMSController implements Initializable {
 
     @FXML
     private TextField username;
+
+    @FXML
+    private Button minimizebtn;
 
     private Stage primaryStage;
 
@@ -69,9 +73,8 @@ public class EMSController implements Initializable {
             throw new RuntimeException(e);
         }
         Stage dashboardStage = new Stage();
-        dashboardStage.setTitle("Employee Management System");
         dashboardStage.setResizable(false);
-        //dashboardStage.initModality(Modality.APPLICATION_MODAL);
+        dashboardStage.initStyle(StageStyle.TRANSPARENT);
         dashboardStage.setScene(scene);
         return dashboardStage;
     }
@@ -131,5 +134,14 @@ public class EMSController implements Initializable {
         closePrimaryStage();
         Stage dashboardStage = createDashboardStage("staff");
         dashboardStage.show();
+    }
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) minimizebtn.getScene().getWindow();
+        stage.setIconified(true);
     }
 }

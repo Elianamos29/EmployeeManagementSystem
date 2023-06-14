@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -331,6 +332,8 @@ public class DashboardController implements Initializable {
 
     @FXML
     private AnchorPane navUserManagement;
+    @FXML
+    private Button btnMinimize;
 
 
 
@@ -355,6 +358,12 @@ public class DashboardController implements Initializable {
         navStaffManagement.setVisible(false);
         navUserManagement.setVisible(false);
 
+        home_dashbordBtn.setStyle("-fx-background-color: #aaa;");
+        home_staffmgmtBtn.setStyle("-fx-background-color: transparent;");
+        home_leavemgmtBtn.setStyle("-fx-background-color: transparent;");
+        home_usermgmtBtn.setStyle("-fx-background-color: transparent;");
+        home_attendBtn.setStyle("-fx-background-color: transparent;");
+
         lblAdmin.setText(getData.username);
         totalEmployeesShow();
         totalPresentShow();
@@ -378,6 +387,12 @@ public class DashboardController implements Initializable {
             navStaffManagement.setVisible(false);
             navUserManagement.setVisible(false);
 
+            home_dashbordBtn.setStyle("-fx-background-color: #aaa;");
+            home_staffmgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_leavemgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_usermgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_attendBtn.setStyle("-fx-background-color: transparent;");
+
             totalEmployeesShow();
             totalPresentShow();
             pendingLeaveRequestsShow();
@@ -394,6 +409,13 @@ public class DashboardController implements Initializable {
             navStaffManagement.setVisible(true);
             navUserManagement.setVisible(false);
 
+            home_dashbordBtn.setStyle("-fx-background-color: transparent;");
+            home_staffmgmtBtn.setStyle("-fx-background-color: #aaa;");
+            home_leavemgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_usermgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_attendBtn.setStyle("-fx-background-color: transparent;");
+
+
             showEmployeeListData();
             addEmployeeGenderList();
         } else if (event.getSource() == home_usermgmtBtn) {
@@ -409,6 +431,12 @@ public class DashboardController implements Initializable {
             navStaffManagement.setVisible(false);
             navUserManagement.setVisible(true);
 
+            home_dashbordBtn.setStyle("-fx-background-color: transparent;");
+            home_staffmgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_leavemgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_usermgmtBtn.setStyle("-fx-background-color: #aaa;");
+            home_attendBtn.setStyle("-fx-background-color: transparent;");
+
             showUserListData();
         } else if (event.getSource() == home_leavemgmtBtn) {
             dashboardView.setVisible(false);
@@ -422,6 +450,12 @@ public class DashboardController implements Initializable {
             navStaffAttendance.setVisible(false);
             navStaffManagement.setVisible(false);
             navUserManagement.setVisible(false);
+
+            home_dashbordBtn.setStyle("-fx-background-color: transparent;");
+            home_staffmgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_leavemgmtBtn.setStyle("-fx-background-color: #aaa;");
+            home_usermgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_attendBtn.setStyle("-fx-background-color: transparent;");
 
             viewPending.setVisible(true);
             viewApproved.setVisible(false);
@@ -439,6 +473,12 @@ public class DashboardController implements Initializable {
             navStaffAttendance.setVisible(true);
             navStaffManagement.setVisible(false);
             navUserManagement.setVisible(false);
+
+            home_dashbordBtn.setStyle("-fx-background-color: transparent;");
+            home_staffmgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_leavemgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_usermgmtBtn.setStyle("-fx-background-color: transparent;");
+            home_attendBtn.setStyle("-fx-background-color: #aaa;");
 
             setChooseDateList();
             showAttendanceList();
@@ -1486,14 +1526,22 @@ public class DashboardController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(EMS.class.getResource("EMS-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage loginStage = new Stage();
-                loginStage.setTitle("Employee Management System");
 
-                //stage.initStyle(StageStyle.TRANSPARENT);
+                loginStage.initStyle(StageStyle.TRANSPARENT);
                 loginStage.setResizable(false);
                 loginStage.setScene(scene);
                 loginStage.show();
 
             }
         } catch (Exception e) {e.printStackTrace();}
+    }
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) btnMinimize.getScene().getWindow();
+        stage.setIconified(true);
     }
 }
