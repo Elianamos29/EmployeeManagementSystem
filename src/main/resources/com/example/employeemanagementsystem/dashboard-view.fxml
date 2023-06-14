@@ -43,7 +43,7 @@
                                     <DropShadow blurType="GAUSSIAN" height="10.0" offsetX="2.0" offsetY="2.0" radius="4.5" width="10.0" />
                                  </effect>
                               </Label>
-                              <Button fx:id="btnClose" layoutX="1072.0" layoutY="13.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="32.0" style="-fx-background-color: transparent;" text="X" textFill="WHITE">
+                              <Button fx:id="btnClose" layoutX="1072.0" layoutY="13.0" mnemonicParsing="false" onAction="#close" prefHeight="28.0" prefWidth="32.0" styleClass="close" stylesheets="@DashboardDesign.css" text="X" textFill="WHITE">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
@@ -113,7 +113,7 @@
                                     <Polyline fill="WHITE" layoutX="4.0" layoutY="-2.0" points="0.0, 8.0, 0.0, 21.0, 12.0, 14.5, 0.0, 8.0" strokeType="INSIDE" />
                                  </children>
                               </AnchorPane>
-                              <Button fx:id="btnMinimize" layoutX="1047.0" layoutY="13.0" mnemonicParsing="false" onAction="#minimize" prefHeight="28.0" prefWidth="32.0" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+                              <Button fx:id="btnMinimize" layoutX="1047.0" layoutY="13.0" mnemonicParsing="false" onAction="#minimize" prefHeight="28.0" prefWidth="32.0" styleClass="minimize" stylesheets="@DashboardDesign.css" text="-" textFill="WHITE">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
