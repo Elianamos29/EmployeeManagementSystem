@@ -12,7 +12,7 @@ public class EMS extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(EMS.class.getResource("EMS-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Employee Management System");
 
         //stage.initStyle(StageStyle.TRANSPARENT);
         stage.setResizable(false);

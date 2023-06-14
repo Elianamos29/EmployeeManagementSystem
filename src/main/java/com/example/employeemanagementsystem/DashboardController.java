@@ -359,6 +359,7 @@ public class DashboardController implements Initializable {
         totalEmployeesShow();
         totalPresentShow();
         pendingLeaveRequestsShow();
+        updateStaffStatus();
 
     }
 
@@ -507,6 +508,10 @@ public class DashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void totalInactiveShow() {
+
     }
 
 
@@ -949,7 +954,7 @@ public class DashboardController implements Initializable {
                     alert.setHeaderText(null);
                     if (status.equals("approved")) {
                         alert.setContentText("Successfully Approved!");
-                        setEmployeeStatus();
+                        updateStaffStatus();
                     } else
                         alert.setContentText("Successfully rejected!");
                     alert.showAndWait();
@@ -961,29 +966,47 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void setEmployeeStatus() {
-        Leave leave;
-        String sql = "SELECT * FROM leaverequest WHERE staffID = " + getData.id + " and status = 'approved'";
+    public ArrayList<Integer> inactiveStaffList() {
+        ArrayList<Integer> inactiveList = new ArrayList<>();
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String sql = "SELECT * FROM leaverequest WHERE status = 'approved' AND fromDate <= '"
+                + sqlDate + "' AND toDate >= '" + sqlDate + "'";
 
         connect = database.connectDb();
         try {
             statement = connect.createStatement();
             result = statement.executeQuery(sql);
 
-            if (result.next()) {
-                String from = result.getString("fromDate");
-                String to = result.getString("toDate");
+            while (result.next()) {
+                inactiveList.add(result.getInt("staffID"));
+            }
+        } catch (Exception e) {e.printStackTrace();}
 
-                Date date = new Date();
-                Date fromdate = new SimpleDateFormat("yy/MM/dd").parse(from.replace("-", "/"));
-                Date todate = new SimpleDateFormat("yy/MM/dd").parse(to.replace("-", "/"));
+        return inactiveList;
+    }
 
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                java.sql.Date sqlfdate = new java.sql.Date(fromdate.getTime());
-                java.sql.Date sqltdate = new java.sql.Date(todate.getTime());
+    public void updateStaffStatus() {
+        String staffStatus = "active";
+        ArrayList<Integer> list = inactiveStaffList();
+        lblTotalInactive.setText(String.valueOf(list.size()));
+        String sql = "SELECT * FROM employee";
 
-                if (sqlDate.compareTo(sqlfdate) >= 0 && sqlDate.compareTo(sqltdate) <= 0)
-                    getData.isActive = false;
+        connect = database.connectDb();
+        try {
+
+            statement = connect.createStatement();
+            result = statement.executeQuery(sql);
+
+            while (result.next()) {
+                if (list.contains(result.getInt("id"))) {
+                    staffStatus = "inactive";
+                }
+
+                String setStatus = "UPDATE attendance SET status = '" + staffStatus + "' WHERE staffID = " + result.getInt("id");
+                Statement statement2 = connect.createStatement();
+                statement2.executeUpdate(setStatus);
+                staffStatus = "active";
             }
         } catch (Exception e) {e.printStackTrace();}
     }
