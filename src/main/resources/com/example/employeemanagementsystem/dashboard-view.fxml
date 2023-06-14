@@ -47,6 +47,9 @@
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <AnchorPane fx:id="navDashboard" layoutX="254.0" layoutY="19.0" prefHeight="22.0" prefWidth="209.0">
                                  <children>
@@ -117,6 +120,9 @@
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children></AnchorPane>
                      </children>
