@@ -7,7 +7,7 @@
 }
 
 .textfield{
-    -fx-background-color:linear-gradient(to bottom, #efefef, #eee);
+    -fx-background-color:#fff;
     -fx-background-radius:4px;
     -fx-border-color:#000;
     -fx-border-width:.4px;
@@ -15,6 +15,13 @@
     -fx-font-size:13px;
     -fx-font-family:"Arial";
     
+}
+
+.input{
+-fx-background-color: white;
+-fx-background-radius: 15px;
+-fx-border-color: transparent;
+-fx-border-radius: 15px;
 }
 .textfield:focused{
     -fx-background-color:#fff;
@@ -27,9 +34,17 @@
 }
 
 .close:hover {
-    -fx-background-color: #b50d0d
+    -fx-background-color: #b50d0d;
 }
 
 .minimize:hover {
-    -fx-background-color: #b50d0d
+    -fx-background-color: #b50d0d;
+}
+
+.logout {
+     -fx-background-color: transparent;
+}
+
+.logout:hover {
+     -fx-background-color: #aaa;
 }

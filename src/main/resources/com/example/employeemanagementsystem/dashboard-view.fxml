@@ -216,7 +216,7 @@
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Label>
-                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="554.0" mnemonicParsing="false" onAction="#logout" prefHeight="31.0" prefWidth="141.0" style="-fx-background-color: transparent;" text="Logout">
+                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="14.0" layoutY="554.0" mnemonicParsing="false" onAction="#logout" prefHeight="31.0" prefWidth="141.0" styleClass="logout" stylesheets="@DashboardDesign.css" text="Logout">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -401,7 +401,7 @@
                                           <TableColumn fx:id="colDOJ" prefWidth="100.0" text="Date of Joinging" />
                                       </columns>
                                     </TableView>
-                                    <TextField fx:id="txtSearch" layoutX="9.0" layoutY="23.0" onAction="#employeeSearch" prefHeight="35.0" prefWidth="317.0" />
+                                    <TextField fx:id="txtSearch" layoutX="9.0" layoutY="23.0" onAction="#employeeSearch" prefHeight="35.0" prefWidth="317.0" styleClass="textfield" stylesheets="@DashboardDesign.css" />
                                     <Button fx:id="searchBtn" layoutX="278.0" layoutY="24.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="47.0" style="-fx-background-color: white; -fx-background-radius: 0 8px 8px 0; -fx-border-radius: 0 8px 8px 0;" textFill="WHITE">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

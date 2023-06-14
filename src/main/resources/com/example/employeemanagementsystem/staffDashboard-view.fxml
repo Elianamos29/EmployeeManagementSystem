@@ -124,7 +124,7 @@
                                     <DropShadow />
                                  </effect>
                               </Line>
-                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="7.0" layoutY="558.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: transparent;" text="Logout">
+                              <Button fx:id="logoutBtn" graphicTextGap="20.0" layoutX="7.0" layoutY="558.0" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="110.0" styleClass="logout" stylesheets="@StaffDashbaordDesign.css" text="Logout">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>

@@ -3,9 +3,17 @@
 }
 
 .close:hover {
-    -fx-background-color: #b50d0d
+    -fx-background-color: #b50d0d;
 }
 
 .minimize:hover {
-    -fx-background-color: #b50d0d
+    -fx-background-color: #b50d0d;
+}
+
+.logout {
+     -fx-background-color: transparent;
+}
+
+.logout:hover {
+     -fx-background-color: #aaa;
 }

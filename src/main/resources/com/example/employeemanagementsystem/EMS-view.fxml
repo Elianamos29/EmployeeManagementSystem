@@ -42,9 +42,9 @@
                         <BoxBlur width="3.0" />
                      </effect>
                   </ImageView>
-                  <TextField fx:id="username" layoutX="161.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="username" />
-                  <TextField fx:id="password" layoutX="161.0" layoutY="208.0" prefHeight="30.0" prefWidth="250.0" promptText="password" />
-                  <Button fx:id="logbtn" layoutX="161.0" layoutY="291.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" text="Login" />
+                  <TextField fx:id="username" layoutX="161.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="username" styleClass="input" stylesheets="@LoginDesign.css" />
+                  <TextField fx:id="password" layoutX="161.0" layoutY="208.0" prefHeight="30.0" prefWidth="250.0" promptText="password" styleClass="input" stylesheets="@LoginDesign.css" />
+                  <Button fx:id="logbtn" layoutX="161.0" layoutY="291.0" mnemonicParsing="false" onAction="#loginHandler" prefHeight="40.0" prefWidth="250.0" styleClass="logBtn" stylesheets="@LoginDesign.css" text="Login" textFill="WHITE" />
                   <Button fx:id="closebtn" layoutX="511.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="39.0" styleClass="close" stylesheets="@LoginDesign.css" text="X" textFill="#f8f8f8" />
                   <Button fx:id="minimizebtn" layoutX="472.0" mnemonicParsing="false" onAction="#minimize" prefHeight="25.0" prefWidth="39.0" styleClass="minimize" stylesheets="@LoginDesign.css" text="-" textFill="WHITE" />
                </children></AnchorPane>
