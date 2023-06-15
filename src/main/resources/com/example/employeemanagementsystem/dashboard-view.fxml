@@ -138,7 +138,7 @@
                                     <Image url="@user-green.jpg" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="home_dashbordBtn" contentDisplay="TOP" layoutX="14.0" layoutY="193.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Admin Dashboard">
+                              <Button fx:id="home_dashbordBtn" contentDisplay="TOP" layoutX="14.0" layoutY="193.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@DashboardDesign.css" text="Admin Dashboard">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -153,7 +153,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_staffmgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Management" wrapText="true">
+                              <Button fx:id="home_staffmgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="247.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@DashboardDesign.css" text="Staff Management" wrapText="true">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="33.0" pickOnBounds="true">
                                        <image>
@@ -168,7 +168,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_attendBtn" contentDisplay="TOP" layoutX="14.0" layoutY="412.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Attendance" textAlignment="CENTER">
+                              <Button fx:id="home_attendBtn" contentDisplay="TOP" layoutX="14.0" layoutY="412.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@DashboardDesign.css" text="Staff Attendance" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true">
                                        <image>
@@ -183,7 +183,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_usermgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="User Management" textAlignment="CENTER">
+                              <Button fx:id="home_usermgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@DashboardDesign.css" text="User Management" textAlignment="CENTER">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="31.0" pickOnBounds="true">
                                        <image>
@@ -198,7 +198,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="home_leavemgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="298.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Leave Management" wrapText="true">
+                              <Button fx:id="home_leavemgmtBtn" contentDisplay="TOP" layoutX="14.0" layoutY="298.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@DashboardDesign.css" text="Leave Management" wrapText="true">
                                  <graphic>
                                     <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true">
                                        <image>

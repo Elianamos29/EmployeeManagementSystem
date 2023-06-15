@@ -90,10 +90,10 @@
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="172.0" layoutX="39.0" layoutY="34.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@user-white.jpg" />
+                                    <Image url="@user-green.jpg" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="staffdashboardBtn" contentDisplay="TOP" layoutX="25.0" layoutY="260.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Staff Dashboard">
+                              <Button fx:id="staffdashboardBtn" contentDisplay="TOP" layoutX="25.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@StaffDashbaordDesign.css" text="Staff Dashboard">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -108,7 +108,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="requestleaveBtn" contentDisplay="TOP" layoutX="23.0" layoutY="344.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Request Leave">
+                              <Button fx:id="requestleaveBtn" contentDisplay="TOP" graphicTextGap="1.0" layoutX="23.0" layoutY="344.0" mnemonicParsing="false" onAction="#switchView" prefHeight="40.0" prefWidth="200.0" styleClass="navbtn" stylesheets="@StaffDashbaordDesign.css" text="Request Leave">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -280,7 +280,7 @@
                                           <Font name="Arial Bold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="txtNewUsername" layoutX="376.0" layoutY="95.0" prefHeight="35.0" prefWidth="200.0" />
+                                    <TextField fx:id="txtNewUsername" layoutX="376.0" layoutY="95.0" prefHeight="35.0" prefWidth="200.0" stylesheets="@StaffDashbaordDesign.css" />
                                     <TextField fx:id="txtNewPassword" layoutX="376.0" layoutY="144.0" prefHeight="35.0" prefWidth="200.0" />
                                     <TextField fx:id="txtConfirmPassword" layoutX="376.0" layoutY="199.0" prefHeight="35.0" prefWidth="200.0" />
                                     <Label layoutX="268.0" layoutY="104.0" text="New Username:" />

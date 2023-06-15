@@ -29,6 +29,14 @@
     -fx-border-width:.8px;
 }
 
+.navbtn {
+    -fx-background-color: transparent;
+}
+
+.navbtn:hover {
+    -fx-background-color: #aaa;
+}
+
 .close, .minimize {
     -fx-background-color: transparent;
 }

@@ -1,3 +1,11 @@
+.navbtn {
+    -fx-background-color: transparent;
+}
+
+.navbtn:hover {
+    -fx-background-color: #aaa;
+}
+
 .close, .minimize {
     -fx-background-color: transparent;
 }
@@ -16,4 +24,26 @@
 
 .logout:hover {
      -fx-background-color: #aaa;
+}
+
+.input{
+-fx-background-color: white;
+-fx-background-radius: 15px;
+-fx-border-color: transparent;
+-fx-border-radius: 15px;
+}
+
+.logBtn{
+-fx-background-color: #12788d;
+-fx-text-fill: white;
+-fx-background-radius: 10px;
+-fx-border-radius: 10px;
+}
+
+.logBtn:hover{
+-fx-border-width: 2px;
+-fx-border-color: #114d57;
+-fx-background-radius: 10px;
+-fx-border-radius: 10px;
+-fx-font-size: 15px;
 }

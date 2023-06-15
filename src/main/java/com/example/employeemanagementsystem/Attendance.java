@@ -1,13 +1,8 @@
 package com.example.employeemanagementsystem;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Attendance {

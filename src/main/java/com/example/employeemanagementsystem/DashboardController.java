@@ -550,11 +550,6 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void totalInactiveShow() {
-
-    }
-
-
 
     public void addEmployee() {
         Date date = new Date();
